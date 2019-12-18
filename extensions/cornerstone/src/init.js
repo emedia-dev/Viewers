@@ -117,7 +117,11 @@ export default function init({ servicesManager, configuration }) {
       const element = event.detail.element;
       element.addEventListener(csTools.EVENTS.MEASUREMENT_ADDED, event => {
         console.log('[addOrUpdate] Adding new measurement...', event.detail);
-        MeasurementService.addOrUpdate({ id: 1, annotation: event.detail });
+        MeasurementService.addOrUpdate({
+          id: 1,
+          annotation: event.detail,
+          broadcastEventName: csTools.EVENTS.MEASUREMENT_ADDED,
+        });
       });
     }
   );
