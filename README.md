@@ -259,6 +259,19 @@ Cancer Institute, Informatics Technology for Cancer Research (ITCR) program,
 under a
 [grant to Dr. Gordon Harris at Massachusetts General Hospital (U24 CA199460)](https://projectreporter.nih.gov/project_info_description.cfm?aid=8971104).
 
+## Publishing dependency
+
+A Github auth token must be generated and added to the local `.nmprc` file:
+
+```
+//npm.pkg.github.com/:_authToken=d196dbbe9a20d30ded01f41e1684e256bfcd28c3
+//npm.pkg.github.com/emedia-dev/:_authToken=d196dbbe9a20d30ded01f41e1684e256bfcd28c3
+```
+And then:
+```
+yarn publish
+```
+
 ## License
 
 MIT © [OHIF](https://github.com/OHIF)
