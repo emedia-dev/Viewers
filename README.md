@@ -261,16 +261,20 @@ under a
 
 ## Publishing dependency
 
-A Github auth token must be generated and added to the local `.nmprc` file:
-
-```
-//npm.pkg.github.com/:_authToken=d196dbbe9a20d30ded01f41e1684e256bfcd28c3
-//npm.pkg.github.com/emedia-dev/:_authToken=d196dbbe9a20d30ded01f41e1684e256bfcd28c3
-```
-And then:
-```
-yarn publish
-```
+* A [Github auth token](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line) must be generated and added to the local `.nmprc` file:
+  ```
+  //npm.pkg.github.com/:_authToken=d196dbbe9a20d30ded01f41e1684e256bfcd28c3
+  //npm.pkg.github.com/emedia-dev/:_authToken=d196dbbe9a20d30ded01f41e1684e256bfcd28c3
+  ```
+* The `version` property in the `package.json` file must be upgraded
+* If the build has not been generated, execute:
+  ```
+  npm run build
+  ```
+* And then publish the dependency:
+  ```
+  npm publish
+  ```
 
 ## License
 
