@@ -246,11 +246,16 @@ function _initExtensions(extensions, cornerstoneExtensionConfig, appConfig) {
     appConfig,
   });
 
+  const measurementsPanel =
+    appConfig.showMeasurementsPanel !== undefined && !appConfig.showMeasurementsPanel
+      ? {}
+      : MeasurementsPanel;
+
   const requiredExtensions = [
     GenericViewerCommands,
     [OHIFCornerstoneExtension, cornerstoneExtensionConfig],
     /* WARNING: MUST BE REGISTERED _AFTER_ OHIFCornerstoneExtension */
-    MeasurementsPanel,
+    measurementsPanel,
   ];
   const mergedExtensions = requiredExtensions.concat(extensions);
   extensionManager.registerExtensions(mergedExtensions);

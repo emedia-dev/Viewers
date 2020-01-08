@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { withTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
@@ -59,9 +59,18 @@ function Header(props) {
     setOptions(optionsValue);
   }, [setOptions, show, t, user, userManager]);
 
-  const { appConfig = {} } = AppContext;
+  const { appConfig = {} } = useContext(AppContext);
+
   const showStudyList =
     appConfig.showStudyList !== undefined ? appConfig.showStudyList : true;
+
+  const showLogo =
+    appConfig.showLogo !== undefined ? appConfig.showLogo : true;
+
+  const showOptions =
+    appConfig.showOptions !== undefined ? appConfig.showOptions : true;
+
+  if (!showStudyList && !showLogo && !showOptions) return null;
 
   // ANTD -- Hamburger, Drawer, Menu
   return (
@@ -78,7 +87,7 @@ function Header(props) {
             </Link>
           )}
 
-          {children}
+          {showLogo && children}
 
           {showStudyList && !home && (
             <Link
@@ -93,10 +102,12 @@ function Header(props) {
           )}
         </div>
 
-        <div className="header-menu">
-          <span className="research-use">{t('INVESTIGATIONAL USE ONLY')}</span>
-          <Dropdown title={t('Options')} list={options} align="right" />
-        </div>
+        {showOptions && (
+          <div className="header-menu">
+            <span className="research-use">{t('INVESTIGATIONAL USE ONLY')}</span>
+            <Dropdown title={t('Options')} list={options} align="right" />
+          </div>
+        )}
       </div>
     </>
   );

@@ -122,8 +122,8 @@ class ToolbarRow extends Component {
               onValueChanged={onPressLeft}
             />
           </div>
-          {buttonComponents}
           <ConnectedLayoutButton />
+          {buttonComponents}
           <ConnectedPluginSwitch studies={this.props.studies} />
           <div
             className="pull-right m-t-1 rm-x-1"

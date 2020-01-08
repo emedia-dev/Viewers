@@ -54,15 +54,6 @@ const definitions = [
     commandOptions: { toolName: 'Zoom' },
   },
   {
-    id: 'Wwwc',
-    label: 'Levels',
-    icon: 'level',
-    //
-    type: TOOLBAR_BUTTON_TYPES.SET_TOOL_ACTIVE,
-    commandName: 'setToolActive',
-    commandOptions: { toolName: 'Wwwc' },
-  },
-  {
     id: 'Pan',
     label: 'Pan',
     icon: 'arrows',
@@ -72,63 +63,19 @@ const definitions = [
     commandOptions: { toolName: 'Pan' },
   },
   {
-    id: 'Length',
-    label: 'Length',
-    icon: 'measure-temp',
+    id: 'Windowing',
+    label: 'Windowing',
+    icon: 'level',
     //
-    type: TOOLBAR_BUTTON_TYPES.SET_TOOL_ACTIVE,
-    commandName: 'setToolActive',
-    commandOptions: { toolName: 'Length' },
-  },
-  {
-    id: 'ArrowAnnotate',
-    label: 'Annotate',
-    icon: 'measure-non-target',
-    //
-    type: TOOLBAR_BUTTON_TYPES.SET_TOOL_ACTIVE,
-    commandName: 'setToolActive',
-    commandOptions: { toolName: 'ArrowAnnotate' },
-  },
-  {
-    id: 'Angle',
-    label: 'Angle',
-    icon: 'angle-left',
-    //
-    type: TOOLBAR_BUTTON_TYPES.SET_TOOL_ACTIVE,
-    commandName: 'setToolActive',
-    commandOptions: { toolName: 'Angle' },
-  },
-  {
-    id: 'Reset',
-    label: 'Reset',
-    icon: 'reset',
-    //
-    type: TOOLBAR_BUTTON_TYPES.COMMAND,
-    commandName: 'resetViewport',
-  },
-  {
-    id: 'Cine',
-    label: 'CINE',
-    icon: 'youtube',
-    //
-    type: TOOLBAR_BUTTON_TYPES.BUILT_IN,
-    options: {
-      behavior: TOOLBAR_BUTTON_BEHAVIORS.CINE,
-    },
-  },
-  {
-    id: 'More',
-    label: 'More',
-    icon: 'ellipse-circle',
     buttons: [
       {
-        id: 'Magnify',
-        label: 'Magnify',
-        icon: 'circle',
+        id: 'Wwwc',
+        label: 'Levels',
+        icon: 'level',
         //
         type: TOOLBAR_BUTTON_TYPES.SET_TOOL_ACTIVE,
         commandName: 'setToolActive',
-        commandOptions: { toolName: 'Magnify' },
+        commandOptions: { toolName: 'Wwwc' },
       },
       {
         id: 'WwwcRegion',
@@ -140,14 +87,21 @@ const definitions = [
         commandOptions: { toolName: 'WwwcRegion' },
       },
       {
-        id: 'DragProbe',
-        label: 'Probe',
-        icon: 'dot-circle',
+        id: 'Invert',
+        label: 'Invert',
+        icon: 'adjust',
         //
-        type: TOOLBAR_BUTTON_TYPES.SET_TOOL_ACTIVE,
-        commandName: 'setToolActive',
-        commandOptions: { toolName: 'DragProbe' },
+        type: TOOLBAR_BUTTON_TYPES.COMMAND,
+        commandName: 'invertViewport',
       },
+    ],
+  },
+  {
+    id: 'Measurements',
+    label: 'Measurements',
+    icon: 'measure-temp',
+    //
+    buttons: [
       {
         id: 'EllipticalRoi',
         label: 'Ellipse',
@@ -158,21 +112,92 @@ const definitions = [
         commandOptions: { toolName: 'EllipticalRoi' },
       },
       {
-        id: 'RectangleRoi',
-        label: 'Rectangle',
-        icon: 'square-o',
+        id: 'DragProbe',
+        label: 'Probe',
+        icon: 'dot-circle',
         //
         type: TOOLBAR_BUTTON_TYPES.SET_TOOL_ACTIVE,
         commandName: 'setToolActive',
-        commandOptions: { toolName: 'RectangleRoi' },
+        commandOptions: { toolName: 'DragProbe' },
       },
       {
-        id: 'Invert',
-        label: 'Invert',
-        icon: 'adjust',
+        id: 'Length',
+        label: 'Length',
+        icon: 'measure-temp',
+        //
+        type: TOOLBAR_BUTTON_TYPES.SET_TOOL_ACTIVE,
+        commandName: 'setToolActive',
+        commandOptions: { toolName: 'Length' },
+      },
+      {
+        id: 'Bidirectional',
+        label: 'Bidirectional',
+        icon: 'measure-target',
+        //
+        type: TOOLBAR_BUTTON_TYPES.SET_TOOL_ACTIVE,
+        commandName: 'setToolActive',
+        commandOptions: { toolName: 'Bidirectional' },
+      },
+      {
+        id: 'Angle',
+        label: 'Angle',
+        icon: 'angle-left',
+        //
+        type: TOOLBAR_BUTTON_TYPES.SET_TOOL_ACTIVE,
+        commandName: 'setToolActive',
+        commandOptions: { toolName: 'Angle' },
+      },
+      {
+        id: 'ArrowAnnotate',
+        label: 'Annotate',
+        icon: 'measure-non-target',
+        //
+        type: TOOLBAR_BUTTON_TYPES.SET_TOOL_ACTIVE,
+        commandName: 'setToolActive',
+        commandOptions: { toolName: 'ArrowAnnotate' },
+      },
+      {
+        id: 'Eraser',
+        label: 'Eraser',
+        icon: 'eraser',
+        //
+        type: TOOLBAR_BUTTON_TYPES.SET_TOOL_ACTIVE,
+        commandName: 'setToolActive',
+        commandOptions: { toolName: 'Eraser' },
+      },
+      {
+        id: 'Clear',
+        label: 'Clear',
+        icon: 'trash',
         //
         type: TOOLBAR_BUTTON_TYPES.COMMAND,
-        commandName: 'invertViewport',
+        commandName: 'clearAnnotations',
+      },
+    ],
+  },
+  {
+    id: 'More',
+    label: 'More',
+    icon: 'ellipse-circle',
+    buttons: [
+      {
+        id: 'Cine',
+        label: 'CINE',
+        icon: 'youtube',
+        //
+        type: TOOLBAR_BUTTON_TYPES.BUILT_IN,
+        options: {
+          behavior: TOOLBAR_BUTTON_BEHAVIORS.CINE,
+        },
+      },
+      {
+        id: 'Magnify',
+        label: 'Magnify',
+        icon: 'circle',
+        //
+        type: TOOLBAR_BUTTON_TYPES.SET_TOOL_ACTIVE,
+        commandName: 'setToolActive',
+        commandOptions: { toolName: 'Magnify' },
       },
       {
         id: 'RotateRight',
@@ -198,44 +223,26 @@ const definitions = [
         type: TOOLBAR_BUTTON_TYPES.COMMAND,
         commandName: 'flipViewportVertical',
       },
-      {
-        id: 'Clear',
-        label: 'Clear',
-        icon: 'trash',
-        //
-        type: TOOLBAR_BUTTON_TYPES.COMMAND,
-        commandName: 'clearAnnotations',
-      },
-      {
-        id: 'Bidirectional',
-        label: 'Bidirectional',
-        icon: 'measure-target',
-        //
-        type: TOOLBAR_BUTTON_TYPES.SET_TOOL_ACTIVE,
-        commandName: 'setToolActive',
-        commandOptions: { toolName: 'Bidirectional' },
-      },
-      {
-        id: 'Eraser',
-        label: 'Eraser',
-        icon: 'eraser',
-        //
-        type: TOOLBAR_BUTTON_TYPES.SET_TOOL_ACTIVE,
-        commandName: 'setToolActive',
-        commandOptions: { toolName: 'Eraser' },
-      },
-      {
-        id: 'Download',
-        label: 'Download',
-        icon: 'create-screen-capture',
-        //
-        type: TOOLBAR_BUTTON_TYPES.BUILT_IN,
-        options: {
-          behavior: TOOLBAR_BUTTON_BEHAVIORS.DOWNLOAD_SCREEN_SHOT,
-          togglable: true,
-        },
-      },
     ],
+  },
+  {
+    id: 'Reset',
+    label: 'Reset',
+    icon: 'reset',
+    //
+    type: TOOLBAR_BUTTON_TYPES.COMMAND,
+    commandName: 'resetViewport',
+  },
+  {
+    id: 'Download',
+    label: 'Download',
+    icon: 'create-screen-capture',
+    //
+    type: TOOLBAR_BUTTON_TYPES.BUILT_IN,
+    options: {
+      behavior: TOOLBAR_BUTTON_BEHAVIORS.DOWNLOAD_SCREEN_SHOT,
+      togglable: true,
+    },
   },
 ];
 
