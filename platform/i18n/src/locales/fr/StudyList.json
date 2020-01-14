@@ -1,0 +1,10 @@
+{
+  "AccessionNumber": "Numéro d'acquisition ",
+  "Empty": "Vide",
+  "MRN": "MRN",
+  "Modality": "Modalité",
+  "PatientName": "Nom du patient",
+  "StudyDate": "Date d'examen",
+  "StudyDescription": "Description",
+  "StudyList": "Liste d'examens"
+}
