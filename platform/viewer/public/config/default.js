@@ -18,6 +18,7 @@ const defaultConfig = {
   showLogo: false,
   showOptions: false,
   showMeasurementsPanel: false,
+  show2DMPRCommand: false,
   filterQueryParam: false,
   servers: {
     dicomWeb: [

@@ -13,12 +13,15 @@ import {
 
 import './ToolbarRow.css';
 import { commandsManager, extensionManager } from './../App.js';
+import AppContext from '../../../viewer/src/context/AppContext';
 
 import ConnectedCineDialog from './ConnectedCineDialog';
 import ConnectedLayoutButton from './ConnectedLayoutButton';
 import ConnectedPluginSwitch from './ConnectedPluginSwitch.js';
 
 class ToolbarRow extends Component {
+  static contextType = AppContext;
+
   // TODO: Simplify these? isOpen can be computed if we say "any" value for selected,
   // closed if selected is null/undefined
   static propTypes = {
@@ -100,6 +103,9 @@ class ToolbarRow extends Component {
   }
 
   render() {
+    const { appConfig = {} } = this.context;
+    const show2DMPRCommand =
+      appConfig.show2DMPRCommand === undefined ? true : appConfig.show2DMPRCommand;
     const buttonComponents = _getButtonComponents.call(
       this,
       this.state.toolbarButtons,
@@ -111,6 +117,10 @@ class ToolbarRow extends Component {
     };
     const onPressLeft = onPress.bind(this, 'left');
     const onPressRight = onPress.bind(this, 'right');
+
+    const pluginSwitch = show2DMPRCommand ? (
+      <ConnectedPluginSwitch studies={this.props.studies} />
+    ) : null;
 
     return (
       <>
@@ -124,7 +134,7 @@ class ToolbarRow extends Component {
           </div>
           <ConnectedLayoutButton />
           {buttonComponents}
-          <ConnectedPluginSwitch studies={this.props.studies} />
+          {pluginSwitch}
           <div
             className="pull-right m-t-1 rm-x-1"
             style={{ marginLeft: 'auto' }}
