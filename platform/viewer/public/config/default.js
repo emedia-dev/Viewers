@@ -3,7 +3,7 @@ const request = new XMLHttpRequest();
 
 request.open(
   'GET',
-  document.location.protocol + '//' + document.location.host + '/config',
+  document.location.protocol + '//' + document.location.host + '/viewer/config',
   false
 );
 request.send(null);
@@ -11,7 +11,7 @@ request.send(null);
 var config = null;
 const defaultConfig = {
   // default: '/'
-  routerBasename: '/',
+  routerBasename: '/viewer/',
   whiteLabelling: {},
   extensions: [],
   showStudyList: false,
