@@ -3,7 +3,7 @@ const request = new XMLHttpRequest();
 
 request.open(
   'GET',
-  document.location.protocol + '//' + document.location.host + '/viewer/config',
+  document.location.protocol + '//' + document.location.host + '/viewer/config' + document.location.search,
   false
 );
 request.send(null);
