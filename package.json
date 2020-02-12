@@ -1,6 +1,6 @@
 {
   "name": "@emedia-dev/ohif-viewer",
-  "version": "1.0.15",
+  "version": "1.0.16",
   "description": "OHIF viewer fork",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
