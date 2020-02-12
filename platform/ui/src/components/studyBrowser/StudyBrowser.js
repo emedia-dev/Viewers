@@ -13,62 +13,60 @@ function StudyBrowser(props) {
 
   return (
     <div className="study-browser">
-      <div className="scrollable-study-thumbnails">
-        {studies
-          .map((study, studyIndex) => {
-            const { studyInstanceUid } = study;
-            return study.thumbnails.map((thumb, thumbIndex) => {
-              // TODO: Thumb has more props than we care about?
-              const {
-                altImageText,
-                displaySetInstanceUid,
-                imageId,
-                instanceNumber,
-                numImageFrames,
-                seriesDescription,
-                seriesNumber,
-                stackPercentComplete,
-              } = thumb;
+      {studies
+        .map((study, studyIndex) => {
+          const { studyInstanceUid } = study;
+          return study.thumbnails.map((thumb, thumbIndex) => {
+            // TODO: Thumb has more props than we care about?
+            const {
+              altImageText,
+              displaySetInstanceUid,
+              imageId,
+              instanceNumber,
+              numImageFrames,
+              seriesDescription,
+              seriesNumber,
+              stackPercentComplete,
+            } = thumb;
 
-              return (
-                <div
-                  key={thumb.displaySetInstanceUid}
-                  className="thumbnail-container"
-                  data-cy="thumbnail-list"
-                >
-                  <Thumbnail
-                    supportsDrag={supportsDrag}
-                    key={`${studyIndex}_${thumbIndex}`}
-                    id={`${studyIndex}_${thumbIndex}`} // Unused?
-                    // Study
-                    studyInstanceUid={studyInstanceUid} // used by drop
-                    // Thumb
-                    altImageText={altImageText}
-                    imageId={imageId}
-                    instanceNumber={instanceNumber}
-                    displaySetInstanceUid={displaySetInstanceUid} // used by drop
-                    numImageFrames={numImageFrames}
-                    seriesDescription={seriesDescription}
-                    seriesNumber={seriesNumber}
-                    stackPercentComplete={stackPercentComplete}
-                    // Events
-                    onClick={onThumbnailClick.bind(
-                      undefined,
-                      displaySetInstanceUid
-                    )}
-                    onDoubleClick={onThumbnailDoubleClick}
-                  />
-                </div>
-              );
-            });
-          })
-          .flat()}
-      </div>
+            return (
+              <div
+                key={thumb.displaySetInstanceUid}
+                className="thumbnail-container"
+                data-cy="thumbnail-list"
+              >
+                <Thumbnail
+                  supportsDrag={supportsDrag}
+                  key={`${studyIndex}_${thumbIndex}`}
+                  id={`${studyIndex}_${thumbIndex}`} // Unused?
+                  // Study
+                  studyInstanceUid={studyInstanceUid} // used by drop
+                  // Thumb
+                  altImageText={altImageText}
+                  imageId={imageId}
+                  instanceNumber={instanceNumber}
+                  displaySetInstanceUid={displaySetInstanceUid} // used by drop
+                  numImageFrames={numImageFrames}
+                  seriesDescription={seriesDescription}
+                  seriesNumber={seriesNumber}
+                  stackPercentComplete={stackPercentComplete}
+                  // Events
+                  onClick={onThumbnailClick.bind(
+                    undefined,
+                    displaySetInstanceUid
+                  )}
+                  onDoubleClick={onThumbnailDoubleClick}
+                />
+              </div>
+            );
+          });
+        })
+        .flat()}
     </div>
   );
 }
 
-const noop = () => {};
+const noop = () => { };
 
 StudyBrowser.propTypes = {
   studies: PropTypes.arrayOf(

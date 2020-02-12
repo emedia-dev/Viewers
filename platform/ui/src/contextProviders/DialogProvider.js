@@ -238,13 +238,11 @@ const DialogProvider = ({ children, service }) => {
 
   return (
     <DialogContext.Provider value={{ create, dismiss, dismissAll, isEmpty }}>
-      <div className="DraggableArea">
-        {dialogs.some(dialog => dialog.showOverlay) ? (
-          <div className="Overlay active">{renderDialogs()}</div>
-        ) : (
+      {dialogs.some(dialog => dialog.showOverlay) ? (
+        <div className="Overlay active">{renderDialogs()}</div>
+      ) : (
           renderDialogs()
         )}
-      </div>
       {children}
     </DialogContext.Provider>
   );
