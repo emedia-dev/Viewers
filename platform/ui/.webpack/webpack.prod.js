@@ -11,7 +11,7 @@ module.exports = (env, argv) => {
   const commonConfig = webpackCommon(env, argv, { SRC_DIR, DIST_DIR });
 
   return merge(commonConfig, {
-    devtool: 'source-map',
+    devtool: 'eval',
     stats: {
       colors: true,
       hash: true,
