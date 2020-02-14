@@ -5,6 +5,7 @@ import csTools from 'cornerstone-tools';
 import merge from 'lodash.merge';
 import queryString from 'query-string';
 import initCornerstoneTools from './initCornerstoneTools.js';
+import measurementServiceMappingsFactory from './utils/measurementServiceMappings/measurementServiceMappingsFactory';
 
 function fallbackMetaDataProvider(type, imageId) {
   if (!imageId.includes('wado?requestType=WADO')) {
@@ -17,7 +18,7 @@ function fallbackMetaDataProvider(type, imageId) {
   const wadoRoot = window.store.getState().servers.servers[0].wadoRoot;
   const wadoRsImageId = `wadors:${wadoRoot}/studies/${qs.studyUID}/series/${
     qs.seriesUID
-  }/instances/${qs.objectUID}/frames/${qs.frame || 1}`;
+    }/instances/${qs.objectUID}/frames/${qs.frame || 1}`;
 
   return cornerstone.metaData.get(type, wadoRsImageId);
 }
@@ -32,9 +33,9 @@ cornerstone.metaData.addProvider(fallbackMetaDataProvider, -1);
  * @param {Object|Array} configuration.csToolsConfig
  */
 export default function init({ servicesManager, configuration }) {
-  const callInputDialog = (data, event, callback) => {
-    const { UIDialogService } = servicesManager.services;
+  const { UIDialogService, MeasurementService } = servicesManager.services;
 
+  const callInputDialog = (data, event, callback) => {
     if (UIDialogService) {
       let dialogId = UIDialogService.create({
         centralize: true,
@@ -76,31 +77,39 @@ export default function init({ servicesManager, configuration }) {
 
   initCornerstoneTools(defaultCsToolsConfig);
 
-  // ~~ Toooools 🙌
-  const tools = [
-    csTools.PanTool,
-    csTools.ZoomTool,
-    csTools.WwwcTool,
-    csTools.WwwcRegionTool,
-    csTools.MagnifyTool,
-    csTools.StackScrollTool,
-    csTools.StackScrollMouseWheelTool,
-    // Touch
-    csTools.PanMultiTouchTool,
-    csTools.ZoomTouchPinchTool,
-    // Annotations
-    csTools.ArrowAnnotateTool,
-    csTools.EraserTool,
-    csTools.BidirectionalTool,
-    csTools.LengthTool,
-    csTools.AngleTool,
-    csTools.FreehandRoiTool,
-    csTools.EllipticalRoiTool,
-    csTools.DragProbeTool,
-    csTools.RectangleRoiTool,
-    // Segmentation
-    csTools.BrushTool,
-  ];
+  const toolsGroupedByType = {
+    touch: [csTools.PanMultiTouchTool, csTools.ZoomTouchPinchTool],
+    annotations: [
+      csTools.ArrowAnnotateTool,
+      csTools.EraserTool,
+      csTools.BidirectionalTool,
+      csTools.LengthTool,
+      csTools.AngleTool,
+      csTools.FreehandRoiTool,
+      csTools.EllipticalRoiTool,
+      csTools.DragProbeTool,
+      csTools.RectangleRoiTool,
+    ],
+    segmentation: [csTools.BrushTool],
+    other: [
+      csTools.PanTool,
+      csTools.ZoomTool,
+      csTools.WwwcTool,
+      csTools.WwwcRegionTool,
+      csTools.MagnifyTool,
+      csTools.StackScrollTool,
+      csTools.StackScrollMouseWheelTool,
+      csTools.OverlayTool,
+    ],
+  };
+
+  let tools = [];
+  Object.keys(toolsGroupedByType).forEach(toolsGroup =>
+    tools.push(...toolsGroupedByType[toolsGroup])
+  );
+
+  /* Measurement Service */
+  _connectToolsToMeasurementService(MeasurementService);
 
   /* Add extension tools configuration here. */
   const internalToolsConfig = {
@@ -114,13 +123,48 @@ export default function init({ servicesManager, configuration }) {
     },
   };
 
+  /* Abstract tools configuration using extension configuration. */
+  const parseToolProps = (props, tool) => {
+    const { annotations } = toolsGroupedByType;
+    // An alternative approach would be to remove the `drawHandlesOnHover` config
+    // from the supported configuration properties in `cornerstone-tools`
+    const toolsWithHideableHandles = annotations.filter(
+      tool => !['RectangleRoiTool', 'EllipticalRoiTool'].includes(tool.name)
+    );
+
+    let parsedProps = { ...props };
+
+    /**
+     * drawHandles - Never/Always show handles
+     * drawHandlesOnHover - Only show handles on handle hover (pointNearHandle)
+     *
+     * Does not apply to tools where handles aren't placed in predictable
+     * locations.
+     */
+    if (
+      configuration.hideHandles !== false &&
+      toolsWithHideableHandles.includes(tool)
+    ) {
+      if (props.configuration) {
+        parsedProps.configuration.drawHandlesOnHover = true;
+      } else {
+        parsedProps.configuration = { drawHandlesOnHover: true };
+      }
+    }
+
+    return parsedProps;
+  };
+
   /* Add tools with its custom props through extension configuration. */
   tools.forEach(tool => {
     const toolName = tool.name.replace('Tool', '');
     const externalToolsConfig = configuration.tools || {};
     const externalToolProps = externalToolsConfig[toolName] || {};
     const internalToolProps = internalToolsConfig[toolName] || {};
-    const props = merge(internalToolProps, externalToolProps);
+    const props = merge(
+      internalToolProps,
+      parseToolProps(externalToolProps, tool)
+    );
     csTools.addTool(tool, props);
   });
 
@@ -140,4 +184,113 @@ export default function init({ servicesManager, configuration }) {
   csTools.setToolActive('StackScrollMouseWheel', {}); // TODO: Empty options should not be required
   csTools.setToolActive('PanMultiTouch', { pointers: 2 }); // TODO: Better error if no options
   csTools.setToolActive('ZoomTouchPinch', {});
+  csTools.setToolEnabled('Overlay', {});
 }
+
+const _initMeasurementService = measurementService => {
+  /* Initialization */
+  const { toAnnotation, toMeasurement } = measurementServiceMappingsFactory(measurementService);
+  const csToolsVer4MeasurementSource = measurementService.createSource(
+    'CornerstoneTools',
+    '4'
+  );
+
+  /* Matching Criterias */
+  const matchingCriteria = {
+    valueType: measurementService.VALUE_TYPES.POLYLINE,
+    points: 2,
+  };
+
+  /* Mappings */
+  measurementService.addMapping(
+    csToolsVer4MeasurementSource,
+    'Length',
+    matchingCriteria,
+    toAnnotation,
+    toMeasurement
+  );
+
+  return csToolsVer4MeasurementSource;
+};
+
+const _connectToolsToMeasurementService = measurementService => {
+  const csToolsVer4MeasurementSource = _initMeasurementService(measurementService);
+  const {
+    id: sourceId,
+    addOrUpdate,
+    getAnnotation,
+  } = csToolsVer4MeasurementSource;
+
+  /* Measurement Service Events */
+  cornerstone.events.addEventListener(
+    cornerstone.EVENTS.ELEMENT_ENABLED,
+    event => {
+      const {
+        MEASUREMENT_ADDED,
+        MEASUREMENT_UPDATED,
+      } = measurementService.EVENTS;
+
+      measurementService.subscribe(
+        MEASUREMENT_ADDED,
+        ({ source, measurement }) => {
+          if (![sourceId].includes(source.id)) {
+            const annotation = getAnnotation('Length', measurement.id);
+
+            console.log(
+              'Measurement Service [Cornerstone]: Measurement added',
+              measurement
+            );
+            console.log('Mapped annotation:', annotation);
+          }
+        });
+
+      measurementService.subscribe(
+        MEASUREMENT_UPDATED,
+        ({ source, measurement }) => {
+          if (![sourceId].includes(source.id)) {
+            const annotation = getAnnotation('Length', measurement.id);
+
+            console.log(
+              'Measurement Service [Cornerstone]: Measurement updated',
+              measurement
+            );
+            console.log('Mapped annotation:', annotation);
+          }
+        }
+      );
+
+      const addOrUpdateMeasurement = csToolsAnnotation => {
+        try {
+          const { toolName, toolType, measurementData } = csToolsAnnotation;
+          const csTool = toolName || measurementData.toolType || toolType;
+          csToolsAnnotation.id = measurementData._measurementServiceId;
+          const measurementServiceId = addOrUpdate(csTool, csToolsAnnotation);
+
+          if (!measurementData._measurementServiceId) {
+            addMeasurementServiceId(measurementServiceId, csToolsAnnotation);
+          }
+        } catch (error) {
+          console.warn('Failed to add or update measurement:', error);
+        }
+      };
+
+      const addMeasurementServiceId = (id, csToolsAnnotation) => {
+        const { measurementData } = csToolsAnnotation;
+        Object.assign(measurementData, { _measurementServiceId: id });
+      };
+
+      [
+        csTools.EVENTS.MEASUREMENT_ADDED,
+        csTools.EVENTS.MEASUREMENT_MODIFIED,
+      ].forEach(csToolsEvtName => {
+        event.detail.element.addEventListener(
+          csToolsEvtName,
+          ({ detail: csToolsAnnotation }) => {
+            console.log(`Cornerstone Element Event: ${csToolsEvtName}`);
+            addOrUpdateMeasurement(csToolsAnnotation);
+          }
+        );
+      });
+    }
+  );
+};

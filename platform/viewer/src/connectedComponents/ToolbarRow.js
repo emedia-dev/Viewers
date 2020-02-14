@@ -17,7 +17,6 @@ import AppContext from '../../../viewer/src/context/AppContext';
 
 import ConnectedCineDialog from './ConnectedCineDialog';
 import ConnectedLayoutButton from './ConnectedLayoutButton';
-import ConnectedPluginSwitch from './ConnectedPluginSwitch.js';
 
 class ToolbarRow extends Component {
   static contextType = AppContext;
@@ -133,8 +132,6 @@ class ToolbarRow extends Component {
             />
           </div>
           <ConnectedLayoutButton />
-          {buttonComponents}
-          {pluginSwitch}
           <div
             className="pull-right m-t-1 rm-x-1"
             style={{ marginLeft: 'auto' }}

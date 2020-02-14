@@ -79,7 +79,11 @@ class MeasurementTable extends Component {
         </ScrollableArea>
         <div className="measurementTableFooter">
           {saveFunction && (
-            <button onClick={this.saveFunction} className="saveBtn">
+            <button
+              onClick={this.saveFunction}
+              className="saveBtn"
+              data-cy="save-measurements-btn"
+            >
               <Icon name="save" width="14px" height="14px" />
               Save measurements
             </button>
@@ -180,10 +184,12 @@ class MeasurementTable extends Component {
   };
 
   getTimepointsHeader = () => {
-    return this.props.timepoints.map((timepoint, index) => {
+    const { timepoints, t } = this.props;
+
+    return timepoints.map((timepoint, index) => {
       return (
         <div key={index} className="measurementTableHeaderItem">
-          <div className="timepointLabel">{this.props.t(timepoint.key)}</div>
+          <div className="timepointLabel">{t(timepoint.key)}</div>
           <div className="timepointDate">{timepoint.date}</div>
         </div>
       );

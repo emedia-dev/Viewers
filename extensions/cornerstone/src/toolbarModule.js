@@ -244,6 +244,15 @@ const definitions = [
       togglable: true,
     },
   },
+  {
+    id: 'Exit2DMPR',
+    label: 'Exit 2D MPR',
+    icon: 'times',
+    //
+    type: TOOLBAR_BUTTON_TYPES.COMMAND,
+    commandName: 'setCornerstoneLayout',
+    context: 'ACTIVE_VIEWPORT::VTK',
+  },
 ];
 
 export default {

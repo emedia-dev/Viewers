@@ -1,4 +1,5 @@
 import '@percy/cypress';
+import 'cypress-file-upload';
 import { DragSimulator } from '../helpers/DragSimulator.js';
 import {
   initCornerstoneToolsAliases,
@@ -8,6 +9,7 @@ import {
   initStudyListAliasesOnDesktop,
   initStudyListAliasesOnTablet,
   initPreferencesModalAliases,
+  initPreferencesModalFooterBtnAliases,
 } from './aliases.js';
 
 // ***********************************************
@@ -168,13 +170,13 @@ Cypress.Commands.add(
 );
 
 Cypress.Commands.add('expectMinimumThumbnails', (seriesToWait = 1) => {
-  cy.get('[data-cy=thumbnail-list]', { timeout: 10000 }).should($itemList => {
+  cy.get('[data-cy=thumbnail-list]', { timeout: 50000 }).should($itemList => {
     expect($itemList.length >= seriesToWait).to.be.true;
   });
 });
 
 //Command to wait DICOM image to load into the viewport
-Cypress.Commands.add('waitDicomImage', (timeout = 20000) => {
+Cypress.Commands.add('waitDicomImage', (timeout = 50000) => {
   const loaded = cy.isPageLoaded();
 
   if (loaded) {
@@ -209,7 +211,7 @@ Cypress.Commands.add('waitDicomImage', (timeout = 20000) => {
 //Command to reset and clear all the changes made to the viewport
 Cypress.Commands.add('resetViewport', () => {
   //Click on More button
-  cy.get('.expandableToolMenu')
+  cy.get('[data-cy="more"]')
     .as('moreBtn')
     .click();
   //Verify if overlay is displayed
@@ -219,11 +221,11 @@ Cypress.Commands.add('resetViewport', () => {
     }
   });
   //Click on Clear button
-  cy.get('.tooltip-inner > :nth-child(10)')
+  cy.get('[data-cy="clear"]')
     .as('clearBtn')
     .click();
   //Click on Reset button
-  cy.get('.ToolbarRow > :nth-child(9)')
+  cy.get('[data-cy="reset"]')
     .as('resetBtn')
     .click();
 });
@@ -284,9 +286,8 @@ Cypress.Commands.add('initStudyListAliasesOnTablet', () => {
 Cypress.Commands.add(
   'addLengthMeasurement',
   (firstClick = [150, 100], secondClick = [130, 170]) => {
-    cy.initCornerstoneToolsAliases();
-    cy.get('@lengthBtn').click();
-    cy.addLine('@viewport', firstClick, secondClick);
+    cy.get('[data-cy="length"]').click();
+    cy.addLine('.viewport-element', firstClick, secondClick);
   }
 );
 
@@ -294,9 +295,8 @@ Cypress.Commands.add(
 Cypress.Commands.add(
   'addAngleMeasurement',
   (initPos = [180, 390], midPos = [300, 410], finalPos = [180, 450]) => {
-    cy.initCornerstoneToolsAliases();
-    cy.get('@angleBtn').click();
-    cy.addAngle('@viewport', initPos, midPos, finalPos);
+    cy.get('[data-cy="angle"]').click();
+    cy.addAngle('.viewport-element', initPos, midPos, finalPos);
   }
 );
 
@@ -369,7 +369,7 @@ Cypress.Commands.add('percyCanvasSnapshot', (name, options = {}) => {
 });
 
 Cypress.Commands.add('setLayout', (columns = 1, rows = 1) => {
-  cy.get('.btn-group > .toolbar-button').click();
+  cy.get('[data-cy="layout"]').click();
 
   cy.get('.layoutChooser')
     .find('tr')
@@ -442,6 +442,12 @@ Cypress.Commands.add('openPreferences', () => {
   });
 });
 
+Cypress.Commands.add('changePreferencesTab', tabAlias => {
+  cy.initPreferencesModalAliases();
+  cy.get(tabAlias).click();
+  initPreferencesModalFooterBtnAliases();
+});
+
 Cypress.Commands.add('resetUserHoktkeyPreferences', () => {
   // Open User Preferences modal
   cy.openPreferences();
@@ -458,7 +464,7 @@ Cypress.Commands.add(
   (function_label, shortcut) => {
     // Within scopes all `.get` and `.contains` to within the matched elements
     // dom instead of checking from document
-    cy.get('.HotKeysPreferences')
+    cy.get('.HotkeysPreferences')
       .within(() => {
         cy.contains(function_label) // label we're looking for
           .parent()
@@ -471,12 +477,12 @@ Cypress.Commands.add(
 
 Cypress.Commands.add('openDownloadImageModal', () => {
   // Click on More button
-  cy.get('.expandableToolMenu')
+  cy.get('[data-cy="more"]')
     .as('moreBtn')
     .click();
 
   // Click on Download button
-  cy.get('.tooltip-inner > :nth-child(13)')
+  cy.get('[data-cy="download"]')
     .as('downloadBtn')
     .click();
 });
@@ -488,16 +494,16 @@ Cypress.Commands.add('setLanguage', (language, save = true) => {
     .click()
     .should('have.class', 'active');
 
+  initPreferencesModalFooterBtnAliases();
+
   // Language dropdown should be displayed
   cy.get('#language-select').should('be.visible');
 
   // Select Language and Save/Cancel
-  cy.get('#language-select')
-    .select(language)
-    .then(() => {
-      const toClick = save ? '@saveBtn' : '@cancelBtn';
-      cy.get(toClick)
-        .scrollIntoView()
-        .click();
-    });
+  cy.get('#language-select').select(language);
+
+  const toClick = save ? '@saveBtn' : '@cancelBtn';
+  cy.get(toClick)
+    .scrollIntoView()
+    .click();
 });

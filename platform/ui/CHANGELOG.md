@@ -3,6 +3,77 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.1](https://github.com/OHIF/Viewers/compare/@ohif/ui@1.2.0...@ohif/ui@1.2.1) (2020-02-12)
+
+
+### Bug Fixes
+
+* Combined Hotkeys for special characters ([#1233](https://github.com/OHIF/Viewers/issues/1233)) ([2f30e7a](https://github.com/OHIF/Viewers/commit/2f30e7a821a238144c49c56f37d8e5565540b4bd))
+
+
+
+
+
+# [1.2.0](https://github.com/OHIF/Viewers/compare/@ohif/ui@1.1.9...@ohif/ui@1.2.0) (2020-02-10)
+
+
+### Features
+
+* Lesion tracker right panel ([#1428](https://github.com/OHIF/Viewers/issues/1428)) ([98a649b](https://github.com/OHIF/Viewers/commit/98a649b455ffc712938fc5035cdef40695e58440))
+
+
+
+
+
+## [1.1.9](https://github.com/OHIF/Viewers/compare/@ohif/ui@1.1.8...@ohif/ui@1.1.9) (2020-01-30)
+
+
+### Bug Fixes
+
+* download tool fixes & improvements ([#1235](https://github.com/OHIF/Viewers/issues/1235)) ([b9574b6](https://github.com/OHIF/Viewers/commit/b9574b6efcfeb85cde35b5cae63282f8e1b35be6))
+
+
+
+
+
+## [1.1.8](https://github.com/OHIF/Viewers/compare/@ohif/ui@1.1.7...@ohif/ui@1.1.8) (2020-01-08)
+
+
+### Bug Fixes
+
+* measurements panel css and delete button visibility ([#1352](https://github.com/OHIF/Viewers/issues/1352)) ([7ab0bbb](https://github.com/OHIF/Viewers/commit/7ab0bbb32581dcba16ee16b49b92406e2856ac76))
+
+
+
+
+
+## [1.1.7](https://github.com/OHIF/Viewers/compare/@ohif/ui@1.1.6...@ohif/ui@1.1.7) (2019-12-20)
+
+**Note:** Version bump only for package @ohif/ui
+
+
+
+
+
+## [1.1.6](https://github.com/OHIF/Viewers/compare/@ohif/ui@1.1.5...@ohif/ui@1.1.6) (2019-12-20)
+
+**Note:** Version bump only for package @ohif/ui
+
+
+
+
+
+## [1.1.5](https://github.com/OHIF/Viewers/compare/@ohif/ui@1.1.4...@ohif/ui@1.1.5) (2019-12-19)
+
+
+### Bug Fixes
+
+* 🐛 Fix drag-n-drop of local files into OHIF ([#1319](https://github.com/OHIF/Viewers/issues/1319)) ([23305ce](https://github.com/OHIF/Viewers/commit/23305cec9c0f514e73a8dd17f984ffc87ad8d131)), closes [#1307](https://github.com/OHIF/Viewers/issues/1307)
+
+
+
+
+
 ## [1.1.4](https://github.com/OHIF/Viewers/compare/@ohif/ui@1.1.3...@ohif/ui@1.1.4) (2019-12-16)
 
 **Note:** Version bump only for package @ohif/ui
