@@ -5,7 +5,10 @@ import { connect } from 'react-redux';
 import { getActiveContexts } from './../store/layout/selectors.js';
 
 const mapStateToProps = state => {
+  const { viewports } = state;
   return {
+    viewports: viewports.viewportSpecificData,
+    activeViewportIndex: viewports.activeViewportIndex,
     activeContexts: getActiveContexts(state),
   };
 };

@@ -39,5 +39,20 @@
   "Stack Scroll": "Stack Scroll",
   "Stop": "$t(Common:Stop)",
   "Themes": "Themes",
-  "Zoom": "Zoom"
+  "Zoom": "Zoom",
+  "Windowing": "Windowing",
+  "Predefined Windowing": "Predefined Windowing",
+  "Head and neck": "Head and neck",
+  "Brain": "Brain",
+  "Subdural": "Subdural",
+  "Stroke": "Stroke",
+  "Temporal bone": "Temporal bone",
+  "Soft tissues": "Soft tissues",
+  "Lungs": "Lungs",
+  "Mediastinum": "Mediastinum",
+  "Liver": "Liver",
+  "Bone": "Bone",
+  "Chest": "Chest",
+  "Abdomen": "Abdomen",
+  "Spine": "Spine"
 }

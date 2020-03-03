@@ -39,5 +39,20 @@
   "Stack Scroll": "Faire défiler",
   "Stop": "$t(Common:Stop)",
   "Themes": "Thèmes",
-  "Zoom": "Zoom"
+  "Zoom": "Zoom",
+  "Windowing": "Fenêtrage",
+  "Predefined Windowing": "Fenêtrages prédéfinis",
+  "Head and neck": "Tête et cou",
+  "Brain": "Cerveau",
+  "Subdural": "Sous-dural",
+  "Stroke": "AVC",
+  "Temporal bone": "Os temporal",
+  "Soft tissues": "Tissus mous",
+  "Lungs": "Poumons",
+  "Mediastinum": "Médiastin",
+  "Liver": "Foie",
+  "Bone": "Os",
+  "Chest": "Thorax",
+  "Abdomen": "Abdomen",
+  "Spine": "Colonne vertébrale"
 }

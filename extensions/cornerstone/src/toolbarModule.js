@@ -97,6 +97,135 @@ const definitions = [
     ],
   },
   {
+    id: 'PredefinedWindowing',
+    label: 'Predefined Windowing',
+    icon: 'level',
+    modalities: ['CT'],
+    //
+    buttons: [
+      {
+        id: 'HeadNeckWindowing',
+        label: 'Head and neck',
+        icon: 'level',
+        //
+        buttons: [
+          {
+            id: 'BrainWindowing',
+            label: 'Brain',
+            icon: 'level',
+            //
+            type: TOOLBAR_BUTTON_TYPES.COMMAND,
+            commandName: 'setBrainWindowing',
+          },
+          {
+            id: 'SubduralWindowing',
+            label: 'Subdural',
+            icon: 'level',
+            //
+            type: TOOLBAR_BUTTON_TYPES.COMMAND,
+            commandName: 'setSubduralWindowing',
+          },
+          {
+            id: 'StrokeWindowing',
+            label: 'Stroke',
+            icon: 'level',
+            //
+            type: TOOLBAR_BUTTON_TYPES.COMMAND,
+            commandName: 'setStrokeWindowing',
+          },
+          {
+            id: 'TemporalBoneWindowing',
+            label: 'Temporal bone',
+            icon: 'level',
+            //
+            type: TOOLBAR_BUTTON_TYPES.COMMAND,
+            commandName: 'setTemporalBoneWindowing',
+          },
+          {
+            id: 'SoftTissuesWindowing',
+            label: 'Soft tissues',
+            icon: 'level',
+            //
+            type: TOOLBAR_BUTTON_TYPES.COMMAND,
+            commandName: 'setSoftTissuesWindowing',
+          },
+        ],
+      },
+      {
+        id: 'ChestWindowing',
+        label: 'Chest',
+        icon: 'level',
+        //
+        buttons: [
+          {
+            id: 'LungsWindowing',
+            label: 'Lungs',
+            icon: 'level',
+            //
+            type: TOOLBAR_BUTTON_TYPES.COMMAND,
+            commandName: 'setLungsWindowing',
+          },
+          {
+            id: 'MediastinumWindowing',
+            label: 'Mediastinum',
+            icon: 'level',
+            //
+            type: TOOLBAR_BUTTON_TYPES.COMMAND,
+            commandName: 'setMediastinumWindowing',
+          },
+        ],
+      },
+      {
+        id: 'AbdomenWindowing',
+        label: 'Abdomen',
+        icon: 'level',
+        //
+        buttons: [
+          {
+            id: 'AbdomenSoftTissuesWindowing',
+            label: 'Soft tissues',
+            icon: 'level',
+            //
+            type: TOOLBAR_BUTTON_TYPES.COMMAND,
+            commandName: 'setAbdomenSoftTissuesWindowing',
+          },
+          {
+            id: 'LiverWindowing',
+            label: 'Liver',
+            icon: 'level',
+            //
+            type: TOOLBAR_BUTTON_TYPES.COMMAND,
+            commandName: 'setLiverWindowing',
+          },
+        ],
+      },
+      {
+        id: 'SpineWindowing',
+        label: 'Spine',
+        icon: 'level',
+        //
+        buttons: [
+          {
+            id: 'SpineSoftTissuesWindowing',
+            label: 'Soft tissues',
+            icon: 'level',
+            //
+            type: TOOLBAR_BUTTON_TYPES.COMMAND,
+            commandName: 'setSpineSoftTissuesWindowing',
+          },
+          {
+            id: 'BoneWindowing',
+            label: 'Bone',
+            icon: 'level',
+            //
+            type: TOOLBAR_BUTTON_TYPES.COMMAND,
+            commandName: 'setBoneWindowing',
+          },
+        ],
+      },
+    ],
+  },
+  {
     id: 'Measurements',
     label: 'Measurements',
     icon: 'measure-temp',

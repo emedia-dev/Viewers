@@ -21,6 +21,7 @@ class ExpandableToolMenu extends React.Component {
             name: PropTypes.string.isRequired,
           }),
         ]),
+        buttons: PropTypes.arrayOf(PropTypes.shape({})),
       })
     ).isRequired,
     icon: PropTypes.oneOfType([
@@ -58,11 +59,19 @@ class ExpandableToolMenu extends React.Component {
 
   getButtons = () => {
     return this.props.buttons.map((button, index) => {
+      if (Array.isArray(button.buttons) && button.buttons.length) {
+        return (
+          <ExpandableToolMenu label={button.label} buttons={button.buttons} />
+        );
+      }
+
       return (
         <ToolbarButton
           key={index}
           {...button}
           isActive={button.id === this.props.activeCommand}
+          label={button.label}
+          icon={button.icon}
         />
       );
     });

@@ -4,12 +4,13 @@ import { withTranslation } from 'react-i18next';
 
 import { MODULE_TYPES } from '@ohif/core';
 import {
-  ExpandableToolMenu,
   RoundedButtonGroup,
   ToolbarButton,
   withModal,
   withDialog,
 } from '@ohif/ui';
+
+import ExpandableToolMenu from '../../../ui/src/viewer/ExpandableToolMenu';
 
 import './ToolbarRow.css';
 import { commandsManager, extensionManager } from './../App.js';
@@ -31,6 +32,8 @@ class ToolbarRow extends Component {
     handleSidePanelChange: PropTypes.func,
     activeContexts: PropTypes.arrayOf(PropTypes.string).isRequired,
     studies: PropTypes.array,
+    viewports: PropTypes.object,
+    activeViewportIndex: PropTypes.number,
   };
 
   constructor(props) {
@@ -104,11 +107,15 @@ class ToolbarRow extends Component {
   render() {
     const { appConfig = {} } = this.context;
     const show2DMPRCommand =
-      appConfig.show2DMPRCommand === undefined ? true : appConfig.show2DMPRCommand;
+      appConfig.show2DMPRCommand === undefined
+        ? true
+        : appConfig.show2DMPRCommand;
     const buttonComponents = _getButtonComponents.call(
       this,
       this.state.toolbarButtons,
-      this.state.activeButtons
+      this.state.activeButtons,
+      this.props.viewports,
+      this.props.activeViewportIndex
     );
 
     const onPress = (side, value) => {
@@ -175,11 +182,20 @@ function _getCustomButtonComponent(button, activeButtons) {
   }
 }
 
+function _setButtonOnClick(elt, button) {
+  button.onClick = _handleToolbarButtonClick.bind(elt, button);
+  if (button.buttons && Array.isArray(button.buttons)) {
+    button.buttons.forEach(childButton => {
+      _setButtonOnClick(elt, childButton);
+    });
+  }
+}
+
 function _getExpandableButtonComponent(button, activeButtons) {
   // Iterate over button definitions and update `onClick` behavior
   let activeCommand;
   const childButtons = button.buttons.map(childButton => {
-    childButton.onClick = _handleToolbarButtonClick.bind(this, childButton);
+    _setButtonOnClick(this, childButton);
 
     if (activeButtons.map(button => button.id).indexOf(childButton.id) > -1) {
       activeCommand = childButton.id;
@@ -214,22 +230,45 @@ function _getDefaultButtonComponent(button, activeButtons) {
  * Determine which extension buttons should be showing, if they're
  * active, and what their onClick behavior should be.
  */
-function _getButtonComponents(toolbarButtons, activeButtons) {
+function _getButtonComponents(
+  toolbarButtons,
+  activeButtons,
+  viewports,
+  activeViewportIndex
+) {
   const _this = this;
   return toolbarButtons.map(button => {
-    const hasCustomComponent = button.CustomComponent;
-    const hasNestedButtonDefinitions = button.buttons && button.buttons.length;
+    if (
+      !('modalities' in button) ||
+      (button.modalities &&
+        Array.isArray(button.modalities) &&
+        button.modalities.includes(
+          _getCurrentModality(viewports, activeViewportIndex)
+        ))
+    ) {
+      const hasCustomComponent = button.CustomComponent;
+      const hasNestedButtonDefinitions =
+        button.buttons && button.buttons.length;
 
-    if (hasCustomComponent) {
-      return _getCustomButtonComponent.call(_this, button, activeButtons);
+      if (hasCustomComponent) {
+        return _getCustomButtonComponent.call(_this, button, activeButtons);
+      }
+
+      if (hasNestedButtonDefinitions) {
+        return _getExpandableButtonComponent.call(_this, button, activeButtons);
+      }
+
+      return _getDefaultButtonComponent.call(_this, button, activeButtons);
     }
-
-    if (hasNestedButtonDefinitions) {
-      return _getExpandableButtonComponent.call(_this, button, activeButtons);
-    }
-
-    return _getDefaultButtonComponent.call(_this, button, activeButtons);
+    return [];
   });
+}
+
+function _getCurrentModality(viewports, activeViewportIndex) {
+  if (viewports && activeViewportIndex in viewports) {
+    return viewports[activeViewportIndex].modality;
+  }
+  return null;
 }
 
 /**

@@ -66,6 +66,16 @@ const commandsModule = ({ servicesManager }) => {
         cornerstone.setViewport(enabledElement, viewport);
       }
     },
+    setWindowing: ({ viewports, w, l }) => {
+      const enabledElement = getEnabledElement(viewports.activeViewportIndex);
+
+      if (enabledElement) {
+        let viewport = cornerstone.getViewport(enabledElement);
+        viewport.voi.windowWidth = w;
+        viewport.voi.windowCenter = l;
+        cornerstone.setViewport(enabledElement, viewport);
+      }
+    },
     // TODO: this is receiving `evt` from `ToolbarRow`. We could use it to have
     //       better mouseButtonMask sets.
     setToolActive: ({ toolName }) => {
@@ -298,6 +308,61 @@ const commandsModule = ({ servicesManager }) => {
       commandFn: actions.flipViewportHorizontal,
       storeContexts: ['viewports'],
       options: {},
+    },
+    setBrainWindowing: {
+      commandFn: actions.setWindowing,
+      storeContexts: ['viewports'],
+      options: { w: 80, l: 40 },
+    },
+    setSubduralWindowing: {
+      commandFn: actions.setWindowing,
+      storeContexts: ['viewports'],
+      options: { w: 215, l: 75 },
+    },
+    setStrokeWindowing: {
+      commandFn: actions.setWindowing,
+      storeContexts: ['viewports'],
+      options: { w: 40, l: 40 },
+    },
+    setTemporalBoneWindowing: {
+      commandFn: actions.setWindowing,
+      storeContexts: ['viewports'],
+      options: { w: 2800, l: 600 },
+    },
+    setSoftTissuesWindowing: {
+      commandFn: actions.setWindowing,
+      storeContexts: ['viewports'],
+      options: { w: 375, l: 40 },
+    },
+    setLungsWindowing: {
+      commandFn: actions.setWindowing,
+      storeContexts: ['viewports'],
+      options: { w: 1500, l: -600 },
+    },
+    setMediastinumWindowing: {
+      commandFn: actions.setWindowing,
+      storeContexts: ['viewports'],
+      options: { w: 350, l: 50 },
+    },
+    setAbdomenSoftTissuesWindowing: {
+      commandFn: actions.setWindowing,
+      storeContexts: ['viewports'],
+      options: { w: 400, l: 50 },
+    },
+    setLiverWindowing: {
+      commandFn: actions.setWindowing,
+      storeContexts: ['viewports'],
+      options: { w: 150, l: 30 },
+    },
+    setSpineSoftTissuesWindowing: {
+      commandFn: actions.setWindowing,
+      storeContexts: ['viewports'],
+      options: { w: 250, l: 50 },
+    },
+    setBoneWindowing: {
+      commandFn: actions.setWindowing,
+      storeContexts: ['viewports'],
+      options: { w: 1800, l: 400 },
     },
     scaleUpViewport: {
       commandFn: actions.scaleViewport,
