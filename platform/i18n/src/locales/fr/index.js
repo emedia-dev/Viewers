@@ -7,6 +7,7 @@ import Header from './Header.json';
 import MeasurementTable from './MeasurementTable.json';
 import StudyList from './StudyList.json';
 import UserPreferencesModal from './UserPreferencesModal.json';
+import Viewer from './Viewer.json';
 
 export default {
   'fr': {
@@ -19,5 +20,6 @@ export default {
     MeasurementTable,
     StudyList,
     UserPreferencesModal,
+    Viewer,
   },
 };

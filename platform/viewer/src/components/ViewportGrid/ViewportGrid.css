@@ -7,3 +7,11 @@
 .viewport-container.active {
   border: var(--viewport-border-thickness) solid var(--active-color);
 }
+
+.non-diagnostic-usage {
+  text-align: center;
+  width: 100%;
+  color: red;
+  bottom: 2px;
+  position: absolute;
+}

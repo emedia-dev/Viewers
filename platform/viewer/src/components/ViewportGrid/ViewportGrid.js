@@ -7,8 +7,9 @@ import classNames from 'classnames';
 import ViewportPane from './ViewportPane.js';
 import DefaultViewport from './DefaultViewport.js';
 import EmptyViewport from './EmptyViewport.js';
+import { withTranslation } from 'react-i18next';
 
-const ViewportGrid = function(props) {
+const ViewportGrid = function (props) {
   const {
     activeViewportIndex,
     availablePlugins,
@@ -85,6 +86,9 @@ const ViewportGrid = function(props) {
         key={viewportIndex}
       >
         {ViewportComponent}
+        <div className="non-diagnostic-usage">
+          {props.t('nonDiagnosticUse')}
+        </div>
       </ViewportPane>
     );
   });
@@ -117,6 +121,7 @@ ViewportGrid.propTypes = {
   defaultPlugin: PropTypes.string,
   numRows: PropTypes.number.isRequired,
   numColumns: PropTypes.number.isRequired,
+  t: PropTypes.func,
 };
 
 ViewportGrid.defaultProps = {
@@ -174,4 +179,4 @@ function _getViewportComponent(
   return <EmptyViewport />;
 }
 
-export default ViewportGrid;
+export default withTranslation('Viewer')(ViewportGrid);
