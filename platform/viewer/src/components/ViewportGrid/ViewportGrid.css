@@ -11,7 +11,11 @@
 .non-diagnostic-usage {
   text-align: center;
   width: 100%;
-  color: red;
-  bottom: 2px;
+  color: rgba(255, 0, 0, .6);
+  font-weight: bold;
+  bottom: 0;
+  padding: auto 2px;
   position: absolute;
+  pointer-events: none;
+  user-select: none;
 }
