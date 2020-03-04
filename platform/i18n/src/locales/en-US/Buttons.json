@@ -1,6 +1,7 @@
 {
   "Acquired": "Acquired",
   "Angle": "Angle",
+  "Annotate": "Annotate",
   "Axial": "Axial",
   "Bidirectional": "Bidirectional",
   "Brush": "Brush",
@@ -13,6 +14,7 @@
   "Download": "Download",
   "Ellipse": "Ellipse",
   "Elliptical": "Elliptical",
+  "Eraser": "Eraser",
   "Flip H": "Flip H",
   "Flip V": "Flip V",
   "Freehand": "Freehand",

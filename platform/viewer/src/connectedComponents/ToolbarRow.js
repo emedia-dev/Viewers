@@ -239,7 +239,8 @@ function _getButtonComponents(
   const _this = this;
   return toolbarButtons.map(button => {
     if (
-      !('modalities' in button) ||
+      (!('modalities' in button) && !('displayed' in button)) ||
+      button.displayed ||
       (button.modalities &&
         Array.isArray(button.modalities) &&
         button.modalities.includes(

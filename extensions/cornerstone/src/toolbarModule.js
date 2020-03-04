@@ -298,6 +298,7 @@ const definitions = [
         id: 'Clear',
         label: 'Clear',
         icon: 'trash',
+        displayed: false,
         //
         type: TOOLBAR_BUTTON_TYPES.COMMAND,
         commandName: 'clearAnnotations',
