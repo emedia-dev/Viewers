@@ -104,12 +104,14 @@ class ToolbarRow extends Component {
     }
   }
 
-  render() {
+  show2DMPRCommand() {
     const { appConfig = {} } = this.context;
-    const show2DMPRCommand =
-      appConfig.show2DMPRCommand === undefined
-        ? true
-        : appConfig.show2DMPRCommand;
+    return appConfig.show2DMPRCommand === undefined
+      ? true
+      : appConfig.show2DMPRCommand;
+  }
+
+  render() {
     const buttonComponents = _getButtonComponents.call(
       this,
       this.state.toolbarButtons,
@@ -124,10 +126,6 @@ class ToolbarRow extends Component {
     const onPressLeft = onPress.bind(this, 'left');
     const onPressRight = onPress.bind(this, 'right');
 
-    const pluginSwitch = show2DMPRCommand ? (
-      <ConnectedPluginSwitch studies={this.props.studies} />
-    ) : null;
-
     return (
       <>
         <div className="ToolbarRow">
@@ -140,7 +138,6 @@ class ToolbarRow extends Component {
           </div>
           <ConnectedLayoutButton />
           {buttonComponents}
-          {pluginSwitch}
           <div
             className="pull-right m-t-1 rm-x-1"
             style={{ marginLeft: 'auto' }}
@@ -247,19 +244,28 @@ function _getButtonComponents(
           _getCurrentModality(viewports, activeViewportIndex)
         ))
     ) {
-      const hasCustomComponent = button.CustomComponent;
-      const hasNestedButtonDefinitions =
-        button.buttons && button.buttons.length;
+      if (
+        (button.id === '2DMPR' && this.show2DMPRCommand()) ||
+        button.id !== '2DMPR'
+      ) {
+        const hasCustomComponent = button.CustomComponent;
+        const hasNestedButtonDefinitions =
+          button.buttons && button.buttons.length;
 
-      if (hasCustomComponent) {
-        return _getCustomButtonComponent.call(_this, button, activeButtons);
+        if (hasCustomComponent) {
+          return _getCustomButtonComponent.call(_this, button, activeButtons);
+        }
+
+        if (hasNestedButtonDefinitions) {
+          return _getExpandableButtonComponent.call(
+            _this,
+            button,
+            activeButtons
+          );
+        }
+
+        return _getDefaultButtonComponent.call(_this, button, activeButtons);
       }
-
-      if (hasNestedButtonDefinitions) {
-        return _getExpandableButtonComponent.call(_this, button, activeButtons);
-      }
-
-      return _getDefaultButtonComponent.call(_this, button, activeButtons);
     }
     return [];
   });
