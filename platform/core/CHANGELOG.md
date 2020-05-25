@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.2-alpha.0](https://github.com/OHIF/Viewers/compare/@ohif/core@2.2.0...@ohif/core@2.5.2-alpha.0) (2020-05-25)
+
+
+### Bug Fixes
+
+* 🐛 1241: Make Plugin switch part of ToolbarModule ([#1322](https://github.com/OHIF/Viewers/issues/1322)) ([6540e36](https://github.com/OHIF/Viewers/commit/6540e36818944ac2eccc696186366ae495b33a04)), closes [#1241](https://github.com/OHIF/Viewers/issues/1241)
+* 💡 Update log to warn ([#1454](https://github.com/OHIF/Viewers/issues/1454)) ([509a7b7](https://github.com/OHIF/Viewers/commit/509a7b7e57834a0653add98cc320b2a5dbefd51d)), closes [#1451](https://github.com/OHIF/Viewers/issues/1451)
+* Combined Hotkeys for special characters ([#1233](https://github.com/OHIF/Viewers/issues/1233)) ([2f30e7a](https://github.com/OHIF/Viewers/commit/2f30e7a821a238144c49c56f37d8e5565540b4bd))
+* Remove trash data from redux storage after updates ([#1358](https://github.com/OHIF/Viewers/issues/1358)) ([7b2d44f](https://github.com/OHIF/Viewers/commit/7b2d44f2c18241ea521b8d3652aee32e36eaddb8))
+* Set VTK viewport as active by interaction  ([#1139](https://github.com/OHIF/Viewers/issues/1139)) ([686d12d](https://github.com/OHIF/Viewers/commit/686d12da5c9d3d435b1e326c2a5caee36e2ed27c))
+
+
+### Features
+
+* [#1342](https://github.com/OHIF/Viewers/issues/1342) - Window level tab ([#1429](https://github.com/OHIF/Viewers/issues/1429)) ([ebc01a8](https://github.com/OHIF/Viewers/commit/ebc01a8ca238d5a3437b44d81f75aa8a5e8d0574))
+* 🎸 Configuration so viewer tools can nix handles ([#1304](https://github.com/OHIF/Viewers/issues/1304)) ([63594d3](https://github.com/OHIF/Viewers/commit/63594d36b0bdba59f0901095aed70b75fb05172d)), closes [#1223](https://github.com/OHIF/Viewers/issues/1223)
+* 🎸 MeasurementService ([#1314](https://github.com/OHIF/Viewers/issues/1314)) ([0c37a40](https://github.com/OHIF/Viewers/commit/0c37a406d963569af8c3be24c697dafd42712dfc))
+
+
+
+
+
+
 ## [2.5.1](https://github.com/OHIF/Viewers/compare/@ohif/core@2.5.0...@ohif/core@2.5.1) (2020-02-21)
 
 

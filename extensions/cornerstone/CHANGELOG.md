@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.2-alpha.0](https://github.com/OHIF/Viewers/compare/@ohif/extension-cornerstone@2.1.1...@ohif/extension-cornerstone@2.4.2-alpha.0) (2020-05-25)
+
+
+### Bug Fixes
+
+* 🐛 1241: Make Plugin switch part of ToolbarModule ([#1322](https://github.com/OHIF/Viewers/issues/1322)) ([6540e36](https://github.com/OHIF/Viewers/commit/6540e36818944ac2eccc696186366ae495b33a04)), closes [#1241](https://github.com/OHIF/Viewers/issues/1241)
+* bump react-cornerstone-viewport version to address critical issue ([#1473](https://github.com/OHIF/Viewers/issues/1473)) ([ee80e02](https://github.com/OHIF/Viewers/commit/ee80e026610442e94caf5e4e3e4d193220cd0ece))
+* Creating 2 commands to activate zoom tool and also to move between displaySets ([#1446](https://github.com/OHIF/Viewers/issues/1446)) ([06a4af0](https://github.com/OHIF/Viewers/commit/06a4af06faaecf6fa06ccd90cdfa879ee8d53053))
+
+
+### Features
+
+* [#1342](https://github.com/OHIF/Viewers/issues/1342) - Window level tab ([#1429](https://github.com/OHIF/Viewers/issues/1429)) ([ebc01a8](https://github.com/OHIF/Viewers/commit/ebc01a8ca238d5a3437b44d81f75aa8a5e8d0574))
+* 🎸 Configuration so viewer tools can nix handles ([#1304](https://github.com/OHIF/Viewers/issues/1304)) ([63594d3](https://github.com/OHIF/Viewers/commit/63594d36b0bdba59f0901095aed70b75fb05172d)), closes [#1223](https://github.com/OHIF/Viewers/issues/1223)
+* 🎸 MeasurementService ([#1314](https://github.com/OHIF/Viewers/issues/1314)) ([0c37a40](https://github.com/OHIF/Viewers/commit/0c37a406d963569af8c3be24c697dafd42712dfc))
+
+
+
+
+
+
 ## [2.4.1](https://github.com/OHIF/Viewers/compare/@ohif/extension-cornerstone@2.4.0...@ohif/extension-cornerstone@2.4.1) (2020-03-03)
 
 

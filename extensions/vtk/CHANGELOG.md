@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.22-alpha.0](https://github.com/OHIF/Viewers/compare/@ohif/extension-vtk@1.1.5...@ohif/extension-vtk@1.2.22-alpha.0) (2020-05-25)
+
+
+### Bug Fixes
+
+* 🐛 1241: Make Plugin switch part of ToolbarModule ([#1322](https://github.com/OHIF/Viewers/issues/1322)) ([6540e36](https://github.com/OHIF/Viewers/commit/6540e36818944ac2eccc696186366ae495b33a04)), closes [#1241](https://github.com/OHIF/Viewers/issues/1241)
+* Set VTK viewport as active by interaction  ([#1139](https://github.com/OHIF/Viewers/issues/1139)) ([686d12d](https://github.com/OHIF/Viewers/commit/686d12da5c9d3d435b1e326c2a5caee36e2ed27c))
+
+
+### Features
+
+* 🎸 Configuration so viewer tools can nix handles ([#1304](https://github.com/OHIF/Viewers/issues/1304)) ([63594d3](https://github.com/OHIF/Viewers/commit/63594d36b0bdba59f0901095aed70b75fb05172d)), closes [#1223](https://github.com/OHIF/Viewers/issues/1223)
+
+
+
+
+
+
 ## [1.2.21](https://github.com/OHIF/Viewers/compare/@ohif/extension-vtk@1.2.20...@ohif/extension-vtk@1.2.21) (2020-02-29)
 
 **Note:** Version bump only for package @ohif/extension-vtk

@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.7.5-alpha.0](https://github.com/OHIF/Viewers/compare/@ohif/viewer@3.2.0...@ohif/viewer@3.7.5-alpha.0) (2020-05-25)
+
+
+### Bug Fixes
+
+* 🐛 1241: Make Plugin switch part of ToolbarModule ([#1322](https://github.com/OHIF/Viewers/issues/1322)) ([6540e36](https://github.com/OHIF/Viewers/commit/6540e36818944ac2eccc696186366ae495b33a04)), closes [#1241](https://github.com/OHIF/Viewers/issues/1241)
+* 🐛 Fix drag-n-drop of local files into OHIF ([#1319](https://github.com/OHIF/Viewers/issues/1319)) ([23305ce](https://github.com/OHIF/Viewers/commit/23305cec9c0f514e73a8dd17f984ffc87ad8d131)), closes [#1307](https://github.com/OHIF/Viewers/issues/1307)
+* 🐛 Metadata is being mistakenly purged ([#1360](https://github.com/OHIF/Viewers/issues/1360)) ([b9a66d4](https://github.com/OHIF/Viewers/commit/b9a66d44241f2896ef184511287fb4984671e16d)), closes [#1326](https://github.com/OHIF/Viewers/issues/1326)
+* Combined Hotkeys for special characters ([#1233](https://github.com/OHIF/Viewers/issues/1233)) ([2f30e7a](https://github.com/OHIF/Viewers/commit/2f30e7a821a238144c49c56f37d8e5565540b4bd))
+* Creating 2 commands to activate zoom tool and also to move between displaySets ([#1446](https://github.com/OHIF/Viewers/issues/1446)) ([06a4af0](https://github.com/OHIF/Viewers/commit/06a4af06faaecf6fa06ccd90cdfa879ee8d53053))
+* download tool fixes & improvements ([#1235](https://github.com/OHIF/Viewers/issues/1235)) ([b9574b6](https://github.com/OHIF/Viewers/commit/b9574b6efcfeb85cde35b5cae63282f8e1b35be6))
+* GCloud dataset picker dialog broken ([#1453](https://github.com/OHIF/Viewers/issues/1453)) ([64dfbea](https://github.com/OHIF/Viewers/commit/64dfbeab7af98277efefadd334df14db79e32a4f))
+* prevent the native context menu from appearing when right-clicking on a measurement or angle (https://github.com/OHIF/Viewers/issues/1406) ([#1469](https://github.com/OHIF/Viewers/issues/1469)) ([9b3be9b](https://github.com/OHIF/Viewers/commit/9b3be9b0c082c9a5b62f2a40f42e59381860fe73))
+
+
+### Features
+
+* [#1342](https://github.com/OHIF/Viewers/issues/1342) - Window level tab ([#1429](https://github.com/OHIF/Viewers/issues/1429)) ([ebc01a8](https://github.com/OHIF/Viewers/commit/ebc01a8ca238d5a3437b44d81f75aa8a5e8d0574))
+* 🎸 Configuration so viewer tools can nix handles ([#1304](https://github.com/OHIF/Viewers/issues/1304)) ([63594d3](https://github.com/OHIF/Viewers/commit/63594d36b0bdba59f0901095aed70b75fb05172d)), closes [#1223](https://github.com/OHIF/Viewers/issues/1223)
+* 🎸 MeasurementService ([#1314](https://github.com/OHIF/Viewers/issues/1314)) ([0c37a40](https://github.com/OHIF/Viewers/commit/0c37a406d963569af8c3be24c697dafd42712dfc))
+* Custom Healthcare API endpoint ([#1367](https://github.com/OHIF/Viewers/issues/1367)) ([a5d6bc6](https://github.com/OHIF/Viewers/commit/a5d6bc6a51784ed3a8a40d4ae773de9099f116b9))
+* lesion-tracker extension ([#1420](https://github.com/OHIF/Viewers/issues/1420)) ([73e4409](https://github.com/OHIF/Viewers/commit/73e440968ce4699d081a9c9f2d21dd68095b3056))
+
+
+
+
+
+
 ## [3.7.4](https://github.com/OHIF/Viewers/compare/@ohif/viewer@3.7.3...@ohif/viewer@3.7.4) (2020-03-03)
 
 **Note:** Version bump only for package @ohif/viewer
