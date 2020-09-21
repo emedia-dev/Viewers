@@ -22,6 +22,5 @@ export default {
     StudyList,
     UserPreferencesModal,
     ViewportDownloadForm,
-    Viewer,
-  },
+  }
 };

@@ -2,62 +2,50 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import { MODULE_TYPES } from '@ohif/core';
-import OHIF, { DICOMSR } from '@ohif/core';
+import OHIF, { MODULE_TYPES, DICOMSR } from '@ohif/core';
 import { withDialog } from '@ohif/ui';
 import moment from 'moment';
 import ConnectedHeader from './ConnectedHeader.js';
-import ConnectedToolbarRow from './ConnectedToolbarRow.js';
+import ToolbarRow from './ToolbarRow.js';
 import ConnectedStudyBrowser from './ConnectedStudyBrowser.js';
 import ConnectedViewerMain from './ConnectedViewerMain.js';
 import SidePanel from './../components/SidePanel.js';
+import ErrorBoundaryDialog from './../components/ErrorBoundaryDialog';
 import { extensionManager } from './../App.js';
 
 // Contexts
-import WhiteLabellingContext from '../context/WhiteLabellingContext.js';
+import WhiteLabelingContext from '../context/WhiteLabelingContext.js';
 import UserManagerContext from '../context/UserManagerContext';
+import AppContext from '../context/AppContext';
 
 import './Viewer.css';
-/**
- * Inits OHIF Hanging Protocol's onReady.
- * It waits for OHIF Hanging Protocol to be ready to instantiate the ProtocolEngine
- * Hanging Protocol will use OHIF LayoutManager to render viewports properly
- */
-/*const initHangingProtocol = () => {
-    // When Hanging Protocol is ready
-    HP.ProtocolStore.onReady(() => {
-
-        // Gets all StudyMetadata objects: necessary for Hanging Protocol to access study metadata
-        const studyMetadataList = OHIF.viewer.StudyMetadataList.all();
-
-        // Instantiate StudyMetadataSource: necessary for Hanging Protocol to get study metadata
-        const studyMetadataSource = new OHIF.studies.classes.OHIFStudyMetadataSource();
-
-        // Get prior studies map
-        const studyPriorsMap = OHIF.studylist.functions.getStudyPriorsMap(studyMetadataList);
-
-        // Creates Protocol Engine object with required arguments
-        const ProtocolEngine = new HP.ProtocolEngine(layoutManager, studyMetadataList, studyPriorsMap, studyMetadataSource);
-
-        // Sets up Hanging Protocol engine
-        HP.setEngine(ProtocolEngine);
-    });
-};*/
-
-/*const viewportUtils = OHIF.viewerbase.viewportUtils;
-
-OHIF.viewer.functionList = {
-    toggleCineDialog: viewportUtils.toggleCineDialog,
-    toggleCinePlay: viewportUtils.toggleCinePlay,
-    clearTools: viewportUtils.clearTools,
-    resetViewport: viewportUtils.resetViewport,
-    invert: viewportUtils.invert
-};*/
+import { finished } from 'stream';
 
 class Viewer extends Component {
   static propTypes = {
-    studies: PropTypes.array,
-    studyInstanceUids: PropTypes.array,
+    studies: PropTypes.arrayOf(
+      PropTypes.shape({
+        StudyInstanceUID: PropTypes.string.isRequired,
+        StudyDate: PropTypes.string,
+        PatientID: PropTypes.string,
+        displaySets: PropTypes.arrayOf(
+          PropTypes.shape({
+            displaySetInstanceUID: PropTypes.string.isRequired,
+            SeriesDescription: PropTypes.string,
+            SeriesNumber: PropTypes.number,
+            InstanceNumber: PropTypes.number,
+            numImageFrames: PropTypes.number,
+            Modality: PropTypes.string.isRequired,
+            images: PropTypes.arrayOf(
+              PropTypes.shape({
+                getImageId: PropTypes.func.isRequired,
+              })
+            ),
+          })
+        ),
+      })
+    ),
+    studyInstanceUIDs: PropTypes.array,
     activeServer: PropTypes.shape({
       type: PropTypes.string,
       wadoRoot: PropTypes.string,
@@ -120,12 +108,12 @@ class Viewer extends Component {
     if (this.props.studies) {
       latestDate = new Date('1000-01-01').toISOString();
       this.props.studies.forEach(study => {
-        const studyDate = moment(study.studyDate, 'YYYYMMDD').toISOString();
-        if (studyDate < earliestDate) {
-          earliestDate = studyDate;
+        const StudyDate = moment(study.StudyDate, 'YYYYMMDD').toISOString();
+        if (StudyDate < earliestDate) {
+          earliestDate = StudyDate;
         }
-        if (studyDate > latestDate) {
-          latestDate = studyDate;
+        if (StudyDate > latestDate) {
+          latestDate = StudyDate;
         }
       });
     }
@@ -135,8 +123,8 @@ class Viewer extends Component {
       {
         timepointType: 'baseline',
         timepointId: 'TimepointId',
-        studyInstanceUids: this.props.studyInstanceUids,
-        patientId: filter.patientId,
+        studyInstanceUIDs: this.props.studyInstanceUIDs,
+        PatientID: filter.PatientID,
         earliestDate,
         latestDate,
         isLocked: false,
@@ -159,7 +147,7 @@ class Viewer extends Component {
     return Promise.resolve();
   };
 
-  disassociateStudy = (timepointIds, studyInstanceUid) => {
+  disassociateStudy = (timepointIds, StudyInstanceUID) => {
     OHIF.log.info('disassociateStudy');
     return Promise.resolve();
   };
@@ -194,14 +182,15 @@ class Viewer extends Component {
     this.measurementApi = measurementApi;
 
     if (studies) {
-      const patientId = studies[0] && studies[0].patientId;
+      const PatientID = studies[0] && studies[0].PatientID;
 
-      timepointApi.retrieveTimepoints({ patientId });
+      timepointApi.retrieveTimepoints({ PatientID });
       if (isStudyLoaded) {
-        this.measurementApi.retrieveMeasurements(patientId, [
+        this.measurementApi.retrieveMeasurements(PatientID, [
           currentTimepointId,
         ]);
       }
+
       this.setState({
         thumbnails: _mapStudiesToThumbnails(studies),
       });
@@ -210,17 +199,18 @@ class Viewer extends Component {
 
   componentDidUpdate(prevProps) {
     const { studies, isStudyLoaded } = this.props;
+
     if (studies !== prevProps.studies) {
       this.setState({
         thumbnails: _mapStudiesToThumbnails(studies),
       });
     }
     if (isStudyLoaded && isStudyLoaded !== prevProps.isStudyLoaded) {
-      const patientId = studies[0] && studies[0].patientId;
+      const PatientID = studies[0] && studies[0].PatientID;
       const { currentTimepointId } = this;
 
-      this.timepointApi.retrieveTimepoints({ patientId });
-      this.measurementApi.retrieveMeasurements(patientId, [currentTimepointId]);
+      this.timepointApi.retrieveTimepoints({ PatientID });
+      this.measurementApi.retrieveMeasurements(PatientID, [currentTimepointId]);
     }
   }
 
@@ -241,55 +231,73 @@ class Viewer extends Component {
     return (
       <>
         {/* HEADER */}
-        <WhiteLabellingContext.Consumer>
-          {whiteLabelling => (
+        <WhiteLabelingContext.Consumer>
+          {whiteLabeling => (
             <UserManagerContext.Consumer>
               {userManager => (
-                <ConnectedHeader home={false} userManager={userManager}>
-                  {whiteLabelling.logoComponent}
-                </ConnectedHeader>
+                <AppContext.Consumer>
+                  {appContext => (
+                    <ConnectedHeader
+                      linkText={
+                        appContext.appConfig.showStudyList
+                          ? 'Study List'
+                          : undefined
+                      }
+                      linkPath={
+                        appContext.appConfig.showStudyList ? '/' : undefined
+                      }
+                      userManager={userManager}
+                    >
+                      {whiteLabeling &&
+                        whiteLabeling.createLogoComponentFn &&
+                        whiteLabeling.createLogoComponentFn(React)}
+                    </ConnectedHeader>
+                  )}
+                </AppContext.Consumer>
               )}
             </UserManagerContext.Consumer>
           )}
-        </WhiteLabellingContext.Consumer>
+        </WhiteLabelingContext.Consumer>
 
         {/* TOOLBAR */}
-        <ConnectedToolbarRow
-          isLeftSidePanelOpen={this.state.isLeftSidePanelOpen}
-          isRightSidePanelOpen={this.state.isRightSidePanelOpen}
-          selectedLeftSidePanel={
-            this.state.isLeftSidePanelOpen
-              ? this.state.selectedLeftSidePanel
-              : ''
-          }
-          selectedRightSidePanel={
-            this.state.isRightSidePanelOpen
-              ? this.state.selectedRightSidePanel
-              : ''
-          }
-          handleSidePanelChange={(side, selectedPanel) => {
-            const sideClicked = side && side[0].toUpperCase() + side.slice(1);
-            const openKey = `is${sideClicked}SidePanelOpen`;
-            const selectedKey = `selected${sideClicked}SidePanel`;
-            const updatedState = Object.assign({}, this.state);
-
-            const isOpen = updatedState[openKey];
-            const prevSelectedPanel = updatedState[selectedKey];
-            // RoundedButtonGroup returns `null` if selected button is clicked
-            const isSameSelectedPanel =
-              prevSelectedPanel === selectedPanel || selectedPanel === null;
-
-            updatedState[selectedKey] = selectedPanel || prevSelectedPanel;
-
-            const isClosedOrShouldClose = !isOpen || isSameSelectedPanel;
-            if (isClosedOrShouldClose) {
-              updatedState[openKey] = !updatedState[openKey];
+        <ErrorBoundaryDialog context="ToolbarRow">
+          <ToolbarRow
+            isLeftSidePanelOpen={this.state.isLeftSidePanelOpen}
+            isRightSidePanelOpen={this.state.isRightSidePanelOpen}
+            selectedLeftSidePanel={
+              this.state.isLeftSidePanelOpen
+                ? this.state.selectedLeftSidePanel
+                : ''
             }
+            selectedRightSidePanel={
+              this.state.isRightSidePanelOpen
+                ? this.state.selectedRightSidePanel
+                : ''
+            }
+            handleSidePanelChange={(side, selectedPanel) => {
+              const sideClicked = side && side[0].toUpperCase() + side.slice(1);
+              const openKey = `is${sideClicked}SidePanelOpen`;
+              const selectedKey = `selected${sideClicked}SidePanel`;
+              const updatedState = Object.assign({}, this.state);
 
-            this.setState(updatedState);
-          }}
-          studies={this.props.studies}
-        />
+              const isOpen = updatedState[openKey];
+              const prevSelectedPanel = updatedState[selectedKey];
+              // RoundedButtonGroup returns `null` if selected button is clicked
+              const isSameSelectedPanel =
+                prevSelectedPanel === selectedPanel || selectedPanel === null;
+
+              updatedState[selectedKey] = selectedPanel || prevSelectedPanel;
+
+              const isClosedOrShouldClose = !isOpen || isSameSelectedPanel;
+              if (isClosedOrShouldClose) {
+                updatedState[openKey] = !updatedState[openKey];
+              }
+
+              this.setState(updatedState);
+            }}
+            studies={this.props.studies}
+          />
+        </ErrorBoundaryDialog>
 
         {/*<ConnectedStudyLoadingMonitor studies={this.props.studies} />*/}
         {/*<StudyPrefetcher studies={this.props.studies} />*/}
@@ -297,34 +305,46 @@ class Viewer extends Component {
         {/* VIEWPORTS + SIDEPANELS */}
         <div className="FlexboxLayout">
           {/* LEFT */}
-          <SidePanel from="left" isOpen={this.state.isLeftSidePanelOpen}>
-            {VisiblePanelLeft ? (
-              <VisiblePanelLeft
-                viewports={this.props.viewports}
-                activeIndex={this.props.activeViewportIndex}
-              />
-            ) : (
-              <ConnectedStudyBrowser
-                studies={this.state.thumbnails}
-                studyMetadata={this.props.studies}
-              />
-            )}
-          </SidePanel>
+          <ErrorBoundaryDialog context="LeftSidePanel">
+            <SidePanel from="left" isOpen={this.state.isLeftSidePanelOpen}>
+              {VisiblePanelLeft ? (
+                <VisiblePanelLeft
+                  viewports={this.props.viewports}
+                  studies={this.props.studies}
+                  activeIndex={this.props.activeViewportIndex}
+                />
+              ) : (
+                <ConnectedStudyBrowser
+                  studies={this.state.thumbnails}
+                  studyMetadata={this.props.studies}
+                />
+              )}
+            </SidePanel>
+          </ErrorBoundaryDialog>
 
           {/* MAIN */}
           <div className={classNames('main-content')}>
-            <ConnectedViewerMain studies={this.props.studies} />
+            <ErrorBoundaryDialog context="ViewerMain">
+              <ConnectedViewerMain
+                studies={this.props.studies}
+                isStudyLoaded={this.props.isStudyLoaded}
+              />
+            </ErrorBoundaryDialog>
           </div>
 
           {/* RIGHT */}
-          <SidePanel from="right" isOpen={this.state.isRightSidePanelOpen}>
-            {VisiblePanelRight && (
-              <VisiblePanelRight
-                viewports={this.props.viewports}
-                activeIndex={this.props.activeViewportIndex}
-              />
-            )}
-          </SidePanel>
+          <ErrorBoundaryDialog context="RightSidePanel">
+            <SidePanel from="right" isOpen={this.state.isRightSidePanelOpen}>
+              {VisiblePanelRight && (
+                <VisiblePanelRight
+                  isOpen={this.state.isRightSidePanelOpen}
+                  viewports={this.props.viewports}
+                  studies={this.props.studies}
+                  activeIndex={this.props.activeViewportIndex}
+                />
+              )}
+            </SidePanel>
+          </ErrorBoundaryDialog>
         </div>
       </>
     );
@@ -338,7 +358,6 @@ export default withDialog(Viewer);
  * a mapping layer?
  *
  * TODO[react]:
- * - Add sorting of display sets
  * - Add showStackLoadingProgressBar option
  *
  * @param {Study[]} studies
@@ -346,21 +365,21 @@ export default withDialog(Viewer);
  */
 const _mapStudiesToThumbnails = function(studies) {
   return studies.map(study => {
-    const { studyInstanceUid } = study;
+    const { StudyInstanceUID } = study;
 
     const thumbnails = study.displaySets.map(displaySet => {
       const {
-        displaySetInstanceUid,
-        seriesDescription,
-        seriesNumber,
-        instanceNumber,
+        displaySetInstanceUID,
+        SeriesDescription,
+        InstanceNumber,
         numImageFrames,
+        SeriesNumber,
       } = displaySet;
 
       let imageId;
       let altImageText;
 
-      if (displaySet.modality && displaySet.modality === 'SEG') {
+      if (displaySet.Modality && displaySet.Modality === 'SEG') {
         // TODO: We want to replace this with a thumbnail showing
         // the segmentation map on the image, but this is easier
         // and better than what we have right now.
@@ -370,22 +389,22 @@ const _mapStudiesToThumbnails = function(studies) {
 
         imageId = displaySet.images[imageIndex].getImageId();
       } else {
-        altImageText = displaySet.modality ? displaySet.modality : 'UN';
+        altImageText = displaySet.Modality ? displaySet.Modality : 'UN';
       }
 
       return {
         imageId,
         altImageText,
-        displaySetInstanceUid,
-        seriesDescription,
-        seriesNumber,
-        instanceNumber,
+        displaySetInstanceUID,
+        SeriesDescription,
+        InstanceNumber,
         numImageFrames,
+        SeriesNumber,
       };
     });
 
     return {
-      studyInstanceUid,
+      StudyInstanceUID,
       thumbnails,
     };
   });

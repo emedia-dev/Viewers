@@ -12,7 +12,6 @@ var config = null;
 const defaultConfig = {
   // default: '/'
   routerBasename: '/viewer/',
-  whiteLabelling: {},
   extensions: [],
   showStudyList: false,
   showLogo: false,
@@ -34,6 +33,7 @@ const defaultConfig = {
         imageRendering: 'wadors',
         thumbnailRendering: 'wadors',
         enableStudyLazyLoad: true,
+        supportsFuzzyMatching: true,
       },
     ],
   },
@@ -151,6 +151,14 @@ const defaultConfig = {
     },
   ],
   cornerstoneExtensionConfig: {},
+  // Following property limits number of simultaneous series metadata requests.
+  // For http/1.x-only servers, set this to 5 or less to improve
+  //  on first meaningful display in viewer
+  // If the server is particularly slow to respond to series metadata
+  //  requests as it extracts the metadata from raw files everytime,
+  //  try setting this to even lower value
+  // Leave it undefined for no limit, sutiable for HTTP/2 enabled servers
+  // maxConcurrentMetadataRequests: 5,
 };
 
 if (request.status === 200) {

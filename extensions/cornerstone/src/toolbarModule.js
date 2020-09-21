@@ -268,52 +268,9 @@ const definitions = [
         commandOptions: { toolName: 'Bidirectional' },
       },
       {
-        id: 'Angle',
-        label: 'Angle',
-        icon: 'angle-left',
-        //
-        type: TOOLBAR_BUTTON_TYPES.SET_TOOL_ACTIVE,
-        commandName: 'setToolActive',
-        commandOptions: { toolName: 'Angle' },
-      },
-      {
-        id: 'ArrowAnnotate',
-        label: 'Annotate',
-        icon: 'measure-non-target',
-        //
-        type: TOOLBAR_BUTTON_TYPES.SET_TOOL_ACTIVE,
-        commandName: 'setToolActive',
-        commandOptions: { toolName: 'ArrowAnnotate' },
-      },
-      {
-        id: 'Eraser',
-        label: 'Eraser',
-        icon: 'eraser',
-        //
-        type: TOOLBAR_BUTTON_TYPES.SET_TOOL_ACTIVE,
-        commandName: 'setToolActive',
-        commandOptions: { toolName: 'Eraser' },
-      },
-      {
-        id: 'Clear',
-        label: 'Clear',
-        icon: 'trash',
-        displayed: false,
-        //
-        type: TOOLBAR_BUTTON_TYPES.COMMAND,
-        commandName: 'clearAnnotations',
-      },
-    ],
-  },
-  {
-    id: 'More',
-    label: 'More',
-    icon: 'ellipse-circle',
-    buttons: [
-      {
-        id: 'Cine',
-        label: 'CINE',
-        icon: 'youtube',
+        id: 'Download',
+        label: 'Download',
+        icon: 'create-screen-capture',
         //
         type: TOOLBAR_BUTTON_TYPES.BUILT_IN,
         options: {

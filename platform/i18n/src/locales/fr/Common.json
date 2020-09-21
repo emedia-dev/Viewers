@@ -1,16 +1,10 @@
 {
-  "Close": "Fermer",
   "Image": "Image",
   "Layout": "Disposition",
-  "Measurements": "Mesures",
   "More": "Plus",
   "Next": "Suivant",
-  "Play": "Jouer",
+  "Play": "Play",
   "Previous": "Précédent",
-  "Reset": "Réinitialiser",
-  "RowsPerPage": "Entrées par page",
-  "Series": "Séries",
-  "Show": "Montrer",
-  "Stop": "Arrêter",
-  "StudyDate": "Date d'examen"
+  "Reset": "Reset",
+  "Stop": "Stop"
 }

@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [0.50.7-alpha.2](https://github.com/OHIF/Viewers/compare/@ohif/extension-dicom-microscopy@0.50.7-alpha.1...@ohif/extension-dicom-microscopy@0.50.7-alpha.2) (2020-05-25)
+## [0.51.3](https://github.com/OHIF/Viewers/compare/@ohif/extension-dicom-microscopy@0.51.2...@ohif/extension-dicom-microscopy@0.51.3) (2020-09-10)
 
 **Note:** Version bump only for package @ohif/extension-dicom-microscopy
 
@@ -11,7 +11,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
-## [0.50.7-alpha.1](https://github.com/OHIF/Viewers/compare/@ohif/extension-dicom-microscopy@0.50.7-alpha.0...@ohif/extension-dicom-microscopy@0.50.7-alpha.1) (2020-05-25)
+## [0.51.2](https://github.com/OHIF/Viewers/compare/@ohif/extension-dicom-microscopy@0.51.1...@ohif/extension-dicom-microscopy@0.51.2) (2020-09-03)
 
 **Note:** Version bump only for package @ohif/extension-dicom-microscopy
 
@@ -19,10 +19,44 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
-## [0.50.7-alpha.0](https://github.com/OHIF/Viewers/compare/@ohif/extension-dicom-microscopy@0.50.6...@ohif/extension-dicom-microscopy@0.50.7-alpha.0) (2020-05-25)
+## [0.51.1](https://github.com/OHIF/Viewers/compare/@ohif/extension-dicom-microscopy@0.51.0...@ohif/extension-dicom-microscopy@0.51.1) (2020-08-28)
 
 **Note:** Version bump only for package @ohif/extension-dicom-microscopy
 
+
+
+
+
+# [0.51.0](https://github.com/OHIF/Viewers/compare/@ohif/extension-dicom-microscopy@0.50.9...@ohif/extension-dicom-microscopy@0.51.0) (2020-06-04)
+
+
+### Features
+
+* 🎸 1729 - error boundary wrapper ([#1764](https://github.com/OHIF/Viewers/issues/1764)) ([c02b232](https://github.com/OHIF/Viewers/commit/c02b232b0cc24f38af5d5e3831d987d048e60ada))
+
+
+
+
+
+## [0.50.9](https://github.com/OHIF/Viewers/compare/@ohif/extension-dicom-microscopy@0.50.8...@ohif/extension-dicom-microscopy@0.50.9) (2020-04-02)
+
+**Note:** Version bump only for package @ohif/extension-dicom-microscopy
+
+
+
+
+
+## [0.50.8](https://github.com/OHIF/Viewers/compare/@ohif/extension-dicom-microscopy@0.50.7...@ohif/extension-dicom-microscopy@0.50.8) (2020-03-31)
+
+**Note:** Version bump only for package @ohif/extension-dicom-microscopy
+
+
+
+
+
+## [0.50.7](https://github.com/OHIF/Viewers/compare/@ohif/extension-dicom-microscopy@0.50.6...@ohif/extension-dicom-microscopy@0.50.7) (2020-03-09)
+
+**Note:** Version bump only for package @ohif/extension-dicom-microscopy
 
 
 

@@ -2,6 +2,9 @@ import OHIF from '@ohif/core';
 import { connect } from 'react-redux';
 import { StudyBrowser } from '@ohif/ui';
 import cloneDeep from 'lodash.clonedeep';
+import findDisplaySetByUID from './findDisplaySetByUID';
+
+const { studyMetadataManager } = OHIF.utils;
 
 const { setActiveViewportSpecificData } = OHIF.redux.actions;
 
@@ -17,8 +20,8 @@ const mapStateToProps = (state, ownProps) => {
 
   studiesWithLoadingData.forEach(study => {
     study.thumbnails.forEach(data => {
-      const { displaySetInstanceUid } = data;
-      const stackId = `StackProgress:${displaySetInstanceUid}`;
+      const { displaySetInstanceUID } = data;
+      const stackId = `StackProgress:${displaySetInstanceUID}`;
       const stackProgressData = stackLoadingProgressMap[stackId];
 
       let stackPercentComplete = 0;
@@ -37,10 +40,27 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    onThumbnailClick: displaySetInstanceUid => {
-      const displaySet = ownProps.studyMetadata[0].displaySets.find(
-        ds => ds.displaySetInstanceUid === displaySetInstanceUid
+    onThumbnailClick: displaySetInstanceUID => {
+      let displaySet = findDisplaySetByUID(
+        ownProps.studyMetadata,
+        displaySetInstanceUID
       );
+
+      if (displaySet.isDerived) {
+        const { Modality } = displaySet;
+
+        displaySet = displaySet.getSourceDisplaySet(ownProps.studyMetadata);
+
+        if (!displaySet) {
+          throw new Error(
+            `Referenced series for ${Modality} dataset not present.`
+          );
+        }
+
+        if (!displaySet) {
+          throw new Error('Source data not present');
+        }
+      }
 
       dispatch(setActiveViewportSpecificData(displaySet));
     },

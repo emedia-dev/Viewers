@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [0.52.7-alpha.2](https://github.com/OHIF/Viewers/compare/@ohif/i18n@0.52.7-alpha.1...@ohif/i18n@0.52.7-alpha.2) (2020-05-25)
+## [0.52.8](https://github.com/OHIF/Viewers/compare/@ohif/i18n@0.52.7...@ohif/i18n@0.52.8) (2020-04-07)
 
 **Note:** Version bump only for package @ohif/i18n
 
@@ -11,22 +11,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
-## [0.52.7-alpha.1](https://github.com/OHIF/Viewers/compare/@ohif/i18n@0.52.7-alpha.0...@ohif/i18n@0.52.7-alpha.1) (2020-05-25)
+## [0.52.7](https://github.com/OHIF/Viewers/compare/@ohif/i18n@0.52.6...@ohif/i18n@0.52.7) (2020-03-09)
 
 **Note:** Version bump only for package @ohif/i18n
-
-
-
-
-
-## [0.52.7-alpha.0](https://github.com/OHIF/Viewers/compare/@ohif/i18n@0.52.4...@ohif/i18n@0.52.7-alpha.0) (2020-05-25)
-
-
-### Bug Fixes
-
-* Combined Hotkeys for special characters ([#1233](https://github.com/OHIF/Viewers/issues/1233)) ([2f30e7a](https://github.com/OHIF/Viewers/commit/2f30e7a821a238144c49c56f37d8e5565540b4bd))
-* download tool fixes & improvements ([#1235](https://github.com/OHIF/Viewers/issues/1235)) ([b9574b6](https://github.com/OHIF/Viewers/commit/b9574b6efcfeb85cde35b5cae63282f8e1b35be6))
-
 
 
 

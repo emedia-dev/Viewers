@@ -3,30 +3,9 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [0.2.1-alpha.2](https://github.com/OHIF/Viewers/compare/@ohif/extension-lesion-tracker@0.2.1-alpha.1...@ohif/extension-lesion-tracker@0.2.1-alpha.2) (2020-05-25)
+## [0.2.1](https://github.com/OHIF/Viewers/compare/@ohif/extension-lesion-tracker@0.2.0...@ohif/extension-lesion-tracker@0.2.1) (2020-09-03)
 
 **Note:** Version bump only for package @ohif/extension-lesion-tracker
-
-
-
-
-
-## [0.2.1-alpha.1](https://github.com/OHIF/Viewers/compare/@ohif/extension-lesion-tracker@0.2.1-alpha.0...@ohif/extension-lesion-tracker@0.2.1-alpha.1) (2020-05-25)
-
-**Note:** Version bump only for package @ohif/extension-lesion-tracker
-
-
-
-
-
-## 0.2.1-alpha.0 (2020-05-25)
-
-
-### Features
-
-* Lesion tracker right panel ([#1428](https://github.com/OHIF/Viewers/issues/1428)) ([98a649b](https://github.com/OHIF/Viewers/commit/98a649b455ffc712938fc5035cdef40695e58440))
-* lesion-tracker extension ([#1420](https://github.com/OHIF/Viewers/issues/1420)) ([73e4409](https://github.com/OHIF/Viewers/commit/73e440968ce4699d081a9c9f2d21dd68095b3056))
-
 
 
 
