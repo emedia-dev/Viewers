@@ -9,6 +9,9 @@ import { UserPreferences } from './../UserPreferences';
 import OHIFLogo from '../OHIFLogo/OHIFLogo.js';
 import './Header.css';
 
+// Context
+import AppContext from './../../context/AppContext';
+
 function Header(props) {
   const {
     t,
@@ -89,7 +92,7 @@ function Header(props) {
 
           {showLogo && children}
 
-          {hasLink && (
+          {hasLink && appConfig.showStudyList && (
             <Link
               className="header-btn header-studyListLinkSection"
               to={{

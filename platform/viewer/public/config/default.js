@@ -10,6 +10,7 @@ request.send(null);
 
 var config = null;
 const defaultConfig = {
+  disableMeasurementPanel: true,
   // default: '/'
   routerBasename: '/viewer/',
   extensions: [],

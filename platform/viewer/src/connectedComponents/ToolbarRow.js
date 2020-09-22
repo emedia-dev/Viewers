@@ -19,6 +19,7 @@ import AppContext from '../../../viewer/src/context/AppContext';
 import ConnectedCineDialog from './ConnectedCineDialog';
 import ConnectedLayoutButton from './ConnectedLayoutButton';
 import { withAppContext } from '../context/AppContext';
+import { connect } from 'react-redux';
 
 class ToolbarRow extends Component {
   static contextType = AppContext;
@@ -181,8 +182,7 @@ class ToolbarRow extends Component {
       this,
       this.state.toolbarButtons,
       this.state.activeButtons,
-      this.props.viewports,
-      this.props.activeViewportIndex
+      this.props.viewport,
     );
 
     const onPress = (side, value) => {
@@ -295,8 +295,7 @@ function _getDefaultButtonComponent(button, activeButtons) {
 function _getButtonComponents(
   toolbarButtons,
   activeButtons,
-  viewports,
-  activeViewportIndex
+  viewport,
 ) {
   const _this = this;
   return toolbarButtons.map(button => {
@@ -306,7 +305,7 @@ function _getButtonComponents(
       (button.modalities &&
         Array.isArray(button.modalities) &&
         button.modalities.includes(
-          _getCurrentModality(viewports, activeViewportIndex)
+          _getCurrentModality(viewport)
         ))
     ) {
       if (
@@ -336,9 +335,9 @@ function _getButtonComponents(
   });
 }
 
-function _getCurrentModality(viewports, activeViewportIndex) {
-  if (viewports && activeViewportIndex in viewports) {
-    return viewports[activeViewportIndex].modality;
+function _getCurrentModality(viewport) {
+  if (viewport && 'Modality' in viewport) {
+    return viewport.Modality;
   }
   return null;
 }
@@ -438,6 +437,14 @@ function _handleBuiltIn(button) {
   }
 }
 
-export default withTranslation(['Common', 'ViewportDownloadForm'])(
-  withModal(withDialog(withAppContext(ToolbarRow)))
+const mapStateToProps = (state) => {
+  const viewportSpecificData =
+    state.viewports.viewportSpecificData[state.viewports.activeViewportIndex] || {};
+  return {
+    viewport: viewportSpecificData,
+  };
+};
+
+export default connect(mapStateToProps)(withTranslation(['Common', 'ViewportDownloadForm'])(
+  withModal(withDialog(withAppContext(ToolbarRow))))
 );

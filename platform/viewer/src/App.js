@@ -276,11 +276,6 @@ function _initExtensions(extensions, cornerstoneExtensionConfig, appConfig) {
     },
   });
 
-  const measurementsPanel =
-    appConfig.showMeasurementsPanel !== undefined && !appConfig.showMeasurementsPanel
-      ? {}
-      : MeasurementsPanel;
-
   const requiredExtensions = [
     GenericViewerCommands,
     [OHIFCornerstoneExtension, cornerstoneExtensionConfig],
