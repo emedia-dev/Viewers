@@ -166,8 +166,13 @@ if (request.status === 200) {
   try {
     config = {
       ...defaultConfig,
-      ...JSON.parse(request.responseText)
+      ...JSON.parse(request.responseText),
     };
+
+    config.servers.dicomWeb[0] = {
+      ...defaultConfig.servers.dicomWeb[0],
+      ...config.servers.dicomWeb[0]
+    }
   }
   catch (e) {
     config = defaultConfig;
