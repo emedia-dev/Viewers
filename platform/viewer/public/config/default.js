@@ -164,7 +164,10 @@ const defaultConfig = {
 
 if (request.status === 200) {
   try {
-    config = JSON.parse(request.responseText);
+    config = {
+      ...defaultConfig,
+      ...JSON.parse(request.responseText)
+    };
   }
   catch (e) {
     config = defaultConfig;
